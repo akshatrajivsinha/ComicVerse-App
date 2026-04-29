@@ -1,0 +1,40 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-south2",
+    "rules": "firebase.rule",
+    "indexes": "firestore.indexes"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ],
+  "emulators": {
+    "pubsub": {
+      "port": 8085
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true
+    }
+  }
+}
