@@ -16,7 +16,7 @@ export const colors = {
   
   // Text colors
   text: '#FFFFFF',
-  textDark: '#000000',
+  textDark: '#29292cd6',
   textGray: '#999',
   textSlate: '#94A3B8',
   textSlateDark: '#64748B',

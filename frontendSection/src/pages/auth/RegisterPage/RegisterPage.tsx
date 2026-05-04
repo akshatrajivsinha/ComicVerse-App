@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, TextInput, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated from 'react-native-reanimated';
 import { colors } from '@src/utils/colors';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 import BackButton from '@src/components/BackButton';
 import Toast from '@src/components/Toast';
@@ -51,13 +53,15 @@ const RegisterPage = ({ navigation }: RegisterPageProps) => {
         <BackButton onPress={() => navigation.goBack()} />
         <View style={styles.innerContainer}>
           <Animated.Text style={[styles.title, titleStyle]}>
-            REGISTER
+            <CustomText font={fonts.bebasNeue}>REGISTER</CustomText>
           </Animated.Text>
 
           <Animated.Text style={[styles.subtitle, titleStyle]}>
-            {loginType === 'phone'
-              ? 'Register with your mobile number'
-              : 'Register with your email'}
+            <CustomText font={fonts.nunitoMedium}>
+              {loginType === 'phone'
+                ? 'Register with your mobile number'
+                : 'Register with your email'}
+            </CustomText>
           </Animated.Text>
 
           <View style={styles.toggleContainer}>
@@ -65,7 +69,8 @@ const RegisterPage = ({ navigation }: RegisterPageProps) => {
               style={[styles.toggleIndicator, toggleIndicatorStyle]}
             />
             <Pressable onPress={toggleLoginType} style={styles.toggleButton}>
-              <Text
+              <CustomText
+                font={fonts.nunitoSemiBold}
                 style={[
                   styles.toggleButtonText,
                   loginType === 'phone'
@@ -74,10 +79,11 @@ const RegisterPage = ({ navigation }: RegisterPageProps) => {
                 ]}
               >
                 Phone
-              </Text>
+              </CustomText>
             </Pressable>
             <Pressable onPress={toggleLoginType} style={styles.toggleButton}>
-              <Text
+              <CustomText
+                font={fonts.nunitoSemiBold}
                 style={[
                   styles.toggleButtonText,
                   loginType === 'email'
@@ -86,12 +92,12 @@ const RegisterPage = ({ navigation }: RegisterPageProps) => {
                 ]}
               >
                 Email
-              </Text>
+              </CustomText>
             </Pressable>
           </View>
 
           <Animated.View style={[styles.inputContainer, inputStyle]}>
-            {loginType === 'phone' && <Text style={styles.prefix}>+91</Text>}
+            {loginType === 'phone' && <CustomText font={fonts.nunitoMedium} style={styles.prefix}>+91</CustomText>}
             <TextInput
               placeholder={
                 loginType === 'phone' ? 'Enter phone number' : 'Enter email'

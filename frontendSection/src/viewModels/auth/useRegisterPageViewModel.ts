@@ -173,19 +173,24 @@ export const useRegisterPageViewModel = ({
 
       try {
         const response = await axios.post(
-          'https://requestonetimepassword-cm5h7rlbta-uc.a.run.app',
-          { email, password, type: 'register' },
+          'https://createuserbyemail-cm5h7rlbta-uc.a.run.app',
+          { email, password },
         );
 
         if (response.data?.success) {
-          showToast('Registration successful', 'success');
+          showToast('OTP sent successfully', 'success');
           navigation.navigate('OTP', { email });
         } else {
-          showToast(response.data?.error || 'Registration failed', 'error');
+          showToast(response.data?.error || 'Failed to send OTP', 'error');
         }
-        setLoading(false);
-      } catch {
-        showToast('Failed to register. Please try again.', 'error');
+      } catch (error: any) {
+        if (error.response) {
+          const message = error.response.data?.error || 'Something went wrong';
+          showToast(message, 'error');
+        } else {
+          showToast('Failed to register. Please try again.', 'error');
+        }
+      } finally {
         setLoading(false);
       }
     }

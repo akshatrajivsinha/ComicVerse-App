@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '@src/utils/colors';
+import { fonts } from '@src/config/fonts';
 
 export const styles = StyleSheet.create({
   backgroundImage: {
@@ -12,7 +13,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(15, 23, 42, 0.57)',
-    // paddingTop: 50,
     paddingHorizontal: 12,
   },
   innerContainer: {
@@ -23,17 +23,24 @@ export const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: '800',
     color: colors.text,
+    fontFamily: fonts.nunitoExtraBold
   },
   subtitle: {
     fontSize: 16,
-    color: colors.textSlate,
-    marginBottom: 40,
+    color: colors.text,
+    marginBottom: 16,
     marginTop: 8,
+    fontFamily: fonts.nunitoBold
   },
   buttonContainer: {
     flexDirection: 'row',
     paddingBottom: 16,
-    gap: 16,
+    gap: 14,
+  },
+  socialButtonContainer: {
+    flexDirection: 'row',
+    paddingBottom: 16,
+    gap: 6,
   },
   loginButton: {
     flex: 1,
@@ -62,11 +69,22 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: colors.secondaryPurple,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '700'
   },
   buttonTextRegister: {
     color: colors.text,
     fontSize: 16,
     fontWeight: '700',
+  },
+  socialButtonTextRegister: {
+    color: colors.text,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  socialLoginButton: {
+    flex: 1,
+    height: 75,
+    borderRadius: 8,
+    backgroundColor: colors.textDark
   },
 });

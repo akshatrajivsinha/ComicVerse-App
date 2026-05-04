@@ -21,6 +21,7 @@ interface OTPScreenProps {
 }
 
 const OTPScreen = ({ navigation, route }: OTPScreenProps) => {
+  const { email } = route.params || {};
   const [otp, setOtp] = useState(['', '', '', '']);
   const inputRefs = [
     React.useRef<TextInput>(null),
@@ -72,7 +73,7 @@ const OTPScreen = ({ navigation, route }: OTPScreenProps) => {
         </Animated.Text>
 
         <Animated.Text style={[styles.subtitle, titleStyle]}>
-          Enter the 4-digit code sent to your phone
+          Enter the 4-digit code sent to {email ? 'your email' : 'your phone'}
         </Animated.Text>
 
         <View style={styles.otpContainer}>

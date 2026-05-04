@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@src/utils/colors';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 const MyAccountScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>My Account</Text>
-        <Text style={styles.subtitle}>Manage your account settings</Text>
+        <CustomText font={fonts.bebasNeue} style={styles.title}>My Account</CustomText>
+        <CustomText font={fonts.nunitoMedium} style={styles.subtitle}>Manage your account settings</CustomText>
       </View>
     </SafeAreaView>
   );

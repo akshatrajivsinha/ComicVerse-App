@@ -1,6 +1,8 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { colors } from '@src/utils/colors';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 import Animated, {
   useSharedValue,
@@ -35,7 +37,7 @@ const BackButton = ({ onPress }: BackButtonProps) => {
           onPressOut={onPressOut}
           style={styles.backButton}
         >
-          <Text style={styles.backArrow}>←</Text>
+          <CustomText font={fonts.nunitoBold} style={styles.backArrow}>←</CustomText>
         </Pressable>
       </Animated.View>
   );

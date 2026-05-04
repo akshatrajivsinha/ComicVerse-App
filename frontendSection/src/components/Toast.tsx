@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import { Text, StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@src/utils/colors';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 interface ToastProps {
   message: string;
@@ -44,7 +46,7 @@ const Toast = ({ message, type = 'error', visible=false, onHide }: ToastProps) =
           { transform: [{ translateY }] },
         ]}
       >
-        <Text style={styles.message}>{message}</Text>
+        <CustomText font={fonts.nunitoBold} style={styles.message}>{message}</CustomText>
       </Animated.View>
     </SafeAreaView>
   );

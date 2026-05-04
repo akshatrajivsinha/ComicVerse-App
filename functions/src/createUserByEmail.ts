@@ -32,11 +32,14 @@ const createUserByEmailFunction = async (req: any, res: any) => {
       password: password,
     });
 
-    // Store user data in database
+    const code = Math.floor(Math.random() * 8999 + 1000);
+
     const userRef = admin.database().ref("users/" + userRecord.uid);
     await userRef.set({
       email: userEmail,
       password: hashedPassword,
+      code,
+      codeValid: true,
       createdAt: admin.database.ServerValue.TIMESTAMP,
       updatedAt: admin.database.ServerValue.TIMESTAMP,
       otpAttempts: 0,

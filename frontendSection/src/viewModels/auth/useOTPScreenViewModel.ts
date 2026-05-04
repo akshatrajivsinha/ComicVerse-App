@@ -7,6 +7,7 @@ import {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import { useAuthStore } from '@src/store/authStore';
 
 interface UseOTPScreenViewModelProps {
   navigation: any;
@@ -17,13 +18,14 @@ export const useOTPScreenViewModel = ({
   navigation,
   route,
 }: UseOTPScreenViewModelProps) => {
-  const { phoneNumber } = route.params || {};
-  const [loading, setLoading] = useState(true);
+  const { phoneNumber, email } = route.params || {};
+  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({
     visible: false,
     message: '',
     type: 'success' as 'success' | 'error',
   });
+  const setAuthToken = useAuthStore((state) => state.setAuthToken);
 
   const titleY = useSharedValue(50);
   const inputY = useSharedValue(80);
@@ -91,12 +93,23 @@ export const useOTPScreenViewModel = ({
     }
 
     try {
-      const response = await axios.post(
-        'https://verifyonetimepassword-cm5h7rlbta-uc.a.run.app',
-        { code: otp, phone: phoneNumber },
-      );
+      let response;
+      
+      if (email) {
+        response = await axios.post(
+          'https://verifyonetimepassword-cm5h7rlbta-uc.a.run.app',
+          { code: otp, email },
+        );
+      } else {
+        response = await axios.post(
+          'https://verifyonetimepassword-cm5h7rlbta-uc.a.run.app',
+          { code: otp, phone: phoneNumber },
+        );
+      }
 
       if (response.status === 200) {
+        const token = response.data?.token;
+        setAuthToken(token);
         showToast('OTP verified successfully', 'success');
         navigation.navigate('MainTabs');
       } else {
@@ -105,7 +118,7 @@ export const useOTPScreenViewModel = ({
     } catch (error: any) {
       if (error.response) {
         const message = error.response.data?.error || 'Invalid OTP';
-
+        
         showToast(message, 'error');
       } else {
         showToast('Failed to verify OTP. Please try again.', 'error');

@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@src/utils/colors';
+import Header from '@src/components/Header';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
+      <Header title="ComicVerse" fontSize={20} />
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>Home</Text>
-        <Text style={styles.subtitle}>Welcome to the Home Screen</Text>
+        <CustomText font={fonts.nunitoMedium} style={styles.subtitle}>Welcome to the Home Screen</CustomText>
       </View>
     </SafeAreaView>
   );
@@ -24,12 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: '800',
-    color: colors.text,
-    marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,

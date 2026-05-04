@@ -8,8 +8,13 @@ import {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import { useAuthStore } from '@src/store/authStore';
 
-export const useLoginPageViewModel = () => {
+interface UseLoginPageViewModelProps {
+  navigation: any;
+}
+
+export const useLoginPageViewModel = ({navigation}: UseLoginPageViewModelProps) => {
   const [loading, setLoading] = useState(false);
   const [loginType, setLoginType] = useState<'phone' | 'email'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -20,6 +25,7 @@ export const useLoginPageViewModel = () => {
     message: '',
     type: 'success' as 'success' | 'error',
   });
+  const setAuthToken = useAuthStore((state) => state.setAuthToken);
 
   const titleY = useSharedValue(50);
   const inputY = useSharedValue(80);
@@ -145,6 +151,7 @@ export const useLoginPageViewModel = () => {
 
         if (response.data?.success) {
           showToast('OTP sent successfully', 'success');
+          navigation.navigate('OTPScreen', { phoneNumber: `91${phoneNumber}` });
         }
       } catch (error: any) {
         if (error.response) {
@@ -174,10 +181,12 @@ export const useLoginPageViewModel = () => {
 
       try {
         const response = await axios.post(
-          'https://requestonetimepassword-cm5h7rlbta-uc.a.run.app',
-          { email, password, type: 'register' },
+          'https://emailverification-cm5h7rlbta-uc.a.run.app',
+          { email, password },
         );
         if (response.data?.success) {
+          const token = response.data?.token;
+          setAuthToken(token);
           showToast('Login successful', 'success');
         } else {
           showToast(response.data?.error, 'error');

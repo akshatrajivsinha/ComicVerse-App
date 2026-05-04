@@ -1,6 +1,8 @@
 import React from 'react';
-import { Pressable, Text, ActivityIndicator, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { Pressable, ActivityIndicator, StyleSheet, ViewStyle, TextStyle, Image, View } from 'react-native';
 import { colors } from '@src/utils/colors';
+import CustomText from '@src/components/CustomText';
+import { fonts } from '@src/config/fonts';
 
 interface CustomButtonProps {
   title: string;
@@ -11,6 +13,9 @@ interface CustomButtonProps {
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
   disabled?: boolean;
+  icon?: any;
+  iconTintColor?: string;
+  font?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -22,6 +27,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   buttonStyle,
   textStyle,
   disabled = false,
+  icon,
+  iconTintColor,
+  font = fonts.nunitoBold,
 }) => {
   return (
     <Pressable
@@ -39,7 +47,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       {loading ? (
         <ActivityIndicator animating={loading} color={colors.text} />
       ) : (
-        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+        <View style={styles.buttonContent}>
+          {icon && (
+            <Image
+              source={icon}
+              style={styles.icon}
+              resizeMode="contain"
+              tintColor={iconTintColor}
+            />
+          )}
+          <CustomText font={font} style={[styles.buttonText, textStyle]}>{title}</CustomText>
+        </View>
       )}
     </Pressable>
   );
@@ -49,12 +67,8 @@ const styles = StyleSheet.create({
   button: {
     height: 58,
     borderRadius: 14,
-    backgroundColor: colors.primaryBlue,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.primaryBlue,
-    shadowOpacity: 0.6,
-    shadowRadius: 12,
     elevation: 8,
   },
   disabled: {
@@ -62,6 +76,15 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.7,
+  },
+  buttonContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
   buttonText: {
     color: colors.text,

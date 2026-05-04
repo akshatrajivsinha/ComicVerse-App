@@ -38,7 +38,7 @@ const LoginPage = ({ navigation }: { navigation: any }) => {
     handleSendOTP,
     toast,
     hideToast,
-  } = useLoginPageViewModel();
+  } = useLoginPageViewModel({ navigation });
 
   return (
     <SafeAreaView style={styles.container}>
