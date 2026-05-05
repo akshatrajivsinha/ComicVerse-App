@@ -1,0 +1,48 @@
+{
+  "common": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "done": "Hecho"
+  },
+  "landing": {
+    "title": "ComicVerse",
+    "subtitle": "Entra en ComicVerse – ¡tu centro definitivo para cómics y películas! Compra mercancía exclusiva y mira tus historias favoritas en un solo lugar.",
+    "enterWorld": "Entra al mundo de los héroes"
+  },
+  "login": {
+    "title": "INICIAR SESIÓN",
+    "loginWithPhone": "Inicia sesión con tu número móvil",
+    "loginWithEmail": "Inicia sesión con tu correo electrónico",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "sendOtp": "Enviar OTP",
+    "continueWithGithub": "Continuar con GitHub"
+  },
+  "register": {
+    "title": "REGISTRARSE",
+    "registerWithPhone": "Regístrate con tu número móvil",
+    "registerWithEmail": "Regístrate con tu correo electrónico"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Personaliza tu experiencia",
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar idioma"
+  },
+  "tabs": {
+    "home": "Inicio",
+    "shows": "Programas",
+    "search": "Buscar",
+    "shop": "Tienda",
+    "profile": "Configuración"
+  }
+}

@@ -41,18 +41,11 @@ const MainStack = () => {
 
 const AppNavigator = () => {
   const authToken = useAuthStore((state) => state.authToken);
-  // const hasHydrated = useAuthStore((state) => state.hasHydrated);
-
-  // if (!hasHydrated) {
-  //   return (
-  //     <ActivityIndicator size="large" color="#b7b7edff" style={{ flex: 1 }} />
-  //   );
-  // }
 
   return (
-    <NavigationContainer>
-      {authToken ? <MainStack /> : <AuthStack />}
-    </NavigationContainer>
+      <NavigationContainer>
+        {authToken ? <MainStack /> : <AuthStack />}
+      </NavigationContainer>
   );
 };
 

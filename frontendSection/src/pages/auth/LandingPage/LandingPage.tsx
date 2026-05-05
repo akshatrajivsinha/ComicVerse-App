@@ -10,9 +10,10 @@ import Animated, {
   createAnimatedComponent,
   runOnJS,
 } from 'react-native-reanimated';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import CustomButton from '@src/components/CustomButton';
 import { fonts } from '@src/config/fonts';
+import { useColors } from '@src/utils/colors';
 
 const AnimatedImageBackground = createAnimatedComponent(ImageBackground);
 
@@ -23,6 +24,8 @@ interface LandingPageProps {
 const LandingPage = ({ navigation }: LandingPageProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const bgOpacity = useSharedValue(1);
+  const themeColors = useColors();
+  const dynamicStyles = createStyles(themeColors);
 
   const images = [
     require('@src/assets/images/AvengerEndgamePoster.jpg'),
@@ -89,40 +92,40 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
   };
 
   return (
-    <View style={styles.backgroundImage}>
+    <View style={[dynamicStyles.backgroundImage, { backgroundColor: themeColors.backgroundDark }]}>
       <AnimatedImageBackground
         source={images[currentImageIndex]}
         style={[StyleSheet.absoluteFill, bgAnimatedStyle]}
         resizeMode="cover"
       />
 
-      <SafeAreaView style={styles.container}>
-        <View style={styles.innerContainer}>
-          <Animated.Text style={[styles.title, titleStyle]}>
+      <SafeAreaView style={dynamicStyles.container}>
+        <View style={dynamicStyles.innerContainer}>
+          <Animated.Text style={[dynamicStyles.title, titleStyle]}>
             ComicVerse
           </Animated.Text>
-          <Animated.Text style={[styles.subtitle, titleStyle]}>
+          <Animated.Text style={[dynamicStyles.subtitle, titleStyle]}>
             Enter ComicVerse – your ultimate hub for comics and movies! Shop
             exclusive merch and watch your favorite stories in one place.
             {'\n\n'}
             Enter the World of Heroes
           </Animated.Text>
         </View>
-        <Animated.View style={[styles.socialButtonContainer, buttonStyle]}>
+        <Animated.View style={[dynamicStyles.socialButtonContainer, buttonStyle]}>
           <CustomButton
             title="Google"
             icon={require('@src/assets/icons/googleLogo.png')}
             onPress={handleLogin}
-            buttonStyle={styles.socialLoginButton}
-            textStyle={styles.socialButtonTextRegister}
+            buttonStyle={dynamicStyles.socialLoginButton}
+            textStyle={dynamicStyles.socialButtonTextRegister}
           />
 
           <CustomButton
             title="Facebook"
             icon={require('@src/assets/icons/facebookLogo.png')}
             onPress={handleRegister}
-            buttonStyle={styles.socialLoginButton}
-            textStyle={styles.socialButtonTextRegister}
+            buttonStyle={dynamicStyles.socialLoginButton}
+            textStyle={dynamicStyles.socialButtonTextRegister}
           />
 
           <CustomButton
@@ -130,25 +133,25 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             icon={require('@src/assets/icons/githubLogo.png')}
             iconTintColor="#FFFFFF"
             onPress={handleRegister}
-            buttonStyle={styles.socialLoginButton}
-            textStyle={styles.socialButtonTextRegister}
+            buttonStyle={dynamicStyles.socialLoginButton}
+            textStyle={dynamicStyles.socialButtonTextRegister}
           />
         </Animated.View>
 
-        <Animated.View style={[styles.buttonContainer, buttonStyle]}>
+        <Animated.View style={[dynamicStyles.buttonContainer, buttonStyle]}>
           <CustomButton
             title="Login"
             onPress={handleLogin}
-            buttonStyle={styles.loginButton}
-            textStyle={styles.buttonText}
+            buttonStyle={dynamicStyles.loginButton}
+            textStyle={dynamicStyles.buttonText}
             font={fonts.nunitoSemiBold}
           />
 
           <CustomButton
             title="Register"
             onPress={handleRegister}
-            buttonStyle={styles.registerButton}
-            textStyle={styles.buttonTextRegister}
+            buttonStyle={dynamicStyles.registerButton}
+            textStyle={dynamicStyles.buttonTextRegister}
           />
         </Animated.View>
       </SafeAreaView>

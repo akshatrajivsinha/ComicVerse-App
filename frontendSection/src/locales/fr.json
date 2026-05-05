@@ -1,0 +1,48 @@
+{
+  "common": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "logout": "Déconnexion",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé"
+  },
+  "landing": {
+    "title": "ComicVerse",
+    "subtitle": "Entrez dans ComicVerse – votre hub ultime pour les bandes dessinées et les films ! Achetez des marchandises exclusives et regardez vos histoires préférées au même endroit.",
+    "enterWorld": "Entrez dans le monde des héros"
+  },
+  "login": {
+    "title": "CONNEXION",
+    "loginWithPhone": "Connectez-vous avec votre numéro de mobile",
+    "loginWithEmail": "Connectez-vous avec votre e-mail",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "sendOtp": "Envoyer OTP",
+    "continueWithGithub": "Continuer avec GitHub"
+  },
+  "register": {
+    "title": "INSCRIPTION",
+    "registerWithPhone": "Inscrivez-vous avec votre numéro de mobile",
+    "registerWithEmail": "Inscrivez-vous avec votre e-mail"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Personnalisez votre expérience",
+    "language": "Langue",
+    "selectLanguage": "Sélectionner la langue"
+  },
+  "tabs": {
+    "home": "Accueil",
+    "shows": "Émissions",
+    "search": "Rechercher",
+    "shop": "Boutique",
+    "profile": "Paramètres"
+  }
+}
