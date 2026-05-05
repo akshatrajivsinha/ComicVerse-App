@@ -1,0 +1,48 @@
+{
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done"
+  },
+  "landing": {
+    "title": "ComicVerse",
+    "subtitle": "Enter ComicVerse – your ultimate hub for comics and movies! Shop exclusive merch and watch your favorite stories in one place.",
+    "enterWorld": "Enter the World of Heroes"
+  },
+  "login": {
+    "title": "LOGIN",
+    "loginWithPhone": "Login with your mobile number",
+    "loginWithEmail": "Login with your email",
+    "phone": "Phone",
+    "email": "Email",
+    "password": "Password",
+    "sendOtp": "Send OTP",
+    "continueWithGithub": "Continue with GitHub"
+  },
+  "register": {
+    "title": "REGISTER",
+    "registerWithPhone": "Register with your mobile number",
+    "registerWithEmail": "Register with your email"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your experience",
+    "language": "Language",
+    "selectLanguage": "Select Language"
+  },
+  "tabs": {
+    "home": "Home",
+    "shows": "Shows",
+    "search": "Search",
+    "shop": "Shop",
+    "profile": "Settings"
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { colors } from '@src/utils/colors';
+import { useColors } from '@src/utils/colors';
 import CustomText from '@src/components/CustomText';
 import { fonts } from '@src/config/fonts';
 
@@ -10,26 +10,31 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, fontSize = 16 }) => {
+  const themeColors = useColors();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <CustomText font={fonts.nunitoExtraBold} style={[styles.title, { fontSize }]}>{title}</CustomText>
-      </View>
+    <View style={[styles.container, { backgroundColor: themeColors.border }]}>
+        <CustomText
+          font={fonts.bebasNeue}
+          style={[styles.title, { fontSize, color: themeColors.text }]}
+        >
+          {title}
+        </CustomText>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.border,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
   },
   headerContainer: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontWeight: '800',
-    color: colors.text,
   },
 });
 
