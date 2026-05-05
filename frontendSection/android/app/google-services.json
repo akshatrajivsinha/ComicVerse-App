@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "234532193651",
+    "firebase_url": "https://one-time-password-4csc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "one-time-password-4csc",
+    "storage_bucket": "one-time-password-4csc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234532193651:android:1c1d4963bacb030de3b106",
+        "android_client_info": {
+          "package_name": "com.frontendsection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWTMh4Of9ILAgALllx5wiyIuQ3lAMjjNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
