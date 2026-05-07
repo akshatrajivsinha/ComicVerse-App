@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '@src/utils/colors';
+import { useColors } from '@src/utils/colors';
 import CustomText from '@src/components/CustomText';
 import { fonts } from '@src/config/fonts';
 
@@ -12,7 +12,8 @@ interface ToastProps {
   onHide: () => void;
 }
 
-const Toast = ({ message, type = 'error', visible=false, onHide }: ToastProps) => {
+const Toast = ({ message, type = 'error', visible = false, onHide }: ToastProps) => {
+  const themeColors = useColors();
   const translateY = new Animated.Value(-100);
 
   useEffect(() => {
@@ -37,6 +38,8 @@ const Toast = ({ message, type = 'error', visible=false, onHide }: ToastProps) =
 
   if (!visible) return null;
 
+  const styles = createStyles(themeColors);
+
   return (
     <SafeAreaView edges={['top']} style={styles.toastContainer}>
       <Animated.View
@@ -54,7 +57,7 @@ const Toast = ({ message, type = 'error', visible=false, onHide }: ToastProps) =
 
 export default Toast;
 
-const styles = StyleSheet.create({
+const createStyles = (themeColors: any) => StyleSheet.create({
   toastContainer: {
     position: 'absolute',
     top: 0,
@@ -68,20 +71,20 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderRadius: 12,
-    shadowColor: colors.shadow,
+    shadowColor: themeColors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
   },
   success: {
-    backgroundColor: colors.successGreen,
+    backgroundColor: themeColors.successGreen,
   },
   error: {
-    backgroundColor: colors.errorRed,
+    backgroundColor: themeColors.errorRed,
   },
   message: {
-    color: colors.text,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
