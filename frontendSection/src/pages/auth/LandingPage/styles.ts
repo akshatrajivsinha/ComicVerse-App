@@ -9,6 +9,7 @@ interface ThemeColors {
   backgroundLight: string;
   primaryBlue: string;
   black: string;
+  textDark: string;
 }
 
 export const createStyles = (themeColors: ThemeColors) => StyleSheet.create({
@@ -93,7 +94,7 @@ export const createStyles = (themeColors: ThemeColors) => StyleSheet.create({
     flex: 1,
     height: 75,
     borderRadius: 8,
-    backgroundColor: themeColors.black
+    backgroundColor: themeColors.textDark
   } as ViewStyle,
 });
 
