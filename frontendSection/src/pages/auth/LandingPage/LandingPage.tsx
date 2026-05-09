@@ -8,7 +8,7 @@ import { styles } from './styles';
 import CustomButton from '@src/components/CustomButton';
 import { fonts } from '@src/config/fonts';
 import Toast from '@src/components/Toast';
-import { useLandingPageViewModel } from '@src/viewModels/auth/useLandingPageViewModel';
+import  useLandingPageViewModel  from '@src/viewModels/auth/useLandingPageViewModel';
 
 const AnimatedImageBackground = createAnimatedComponent(ImageBackground);
 

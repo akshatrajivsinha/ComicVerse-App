@@ -16,7 +16,7 @@ interface UseLandingPageViewModelProps {
   navigation: any;
 }
 
-export const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => {
+const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({
@@ -155,6 +155,8 @@ export const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelPro
     handleRegister,
     showToast,
     hideToast,
-    handleGitHubLogin,
+    handleGitHubLogin
   };
 };
+
+export default useLandingPageViewModel
