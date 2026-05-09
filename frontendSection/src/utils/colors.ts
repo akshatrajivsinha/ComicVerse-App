@@ -1,3 +1,6 @@
+import { useThemeStore } from '@src/store/themeStore';
+import { themes } from '@src/config/theme';
+
 export const colors = {
   black: '#000000',
   white: '#FFFFFF',
@@ -40,4 +43,9 @@ export const colors = {
   
   // Skeleton colors
   skeleton: '#4e6e96ff',
+};
+
+export const useColors = () => {
+  const theme = useThemeStore((state) => state.theme);
+  return themes[theme];
 };

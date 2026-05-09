@@ -5,6 +5,7 @@ import requestOtpFunction from "./requestOtpFunction";
 import verifyOtpFunction from "./verifyOtpFunction";
 import createUserByEmailFunction from "./createUserByEmail";
 import emailVerificationFunction from "./emailVerificationFunction";
+import getCategoryFunction from "./getCategory";
 import serviceAccount from "./serviceAccount.json";
 
 if (!serviceAccount.private_key || !serviceAccount.client_email) {
@@ -22,4 +23,5 @@ export const createUser = onRequest(createUserFunction);
 export const requestOneTimePassword = onRequest(requestOtpFunction);
 export const verifyOneTimePassword = onRequest(verifyOtpFunction);
 export const createUserByEmail = onRequest(createUserByEmailFunction);
+export const getCategory = onRequest(getCategoryFunction);
 export const emailVerification = onRequest(emailVerificationFunction);

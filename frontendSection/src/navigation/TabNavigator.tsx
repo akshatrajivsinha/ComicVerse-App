@@ -7,16 +7,25 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import HomeScreen from '@src/pages/tabs/HomeScreen';
-import SearchScreen from '@src/pages/tabs/SearchScreen';
-import ShowsScreen from '@src/pages/tabs/ShowsScreen';
-import SettingScreen from '@src/pages/tabs/SettingScreen';
-import ShopScreen from '@src/pages/tabs/ShopScreen';
-import { colors } from '@src/utils/colors';
+import { useTranslation } from 'react-i18next';
+import { useColors } from '@src/utils/colors';
+import HomeScreen from '@src/pages/tabs/Home';
+import SearchScreen from '@src/pages/tabs/Search';
+import ShowsScreen from '@src/pages/tabs/Shows';
+import SettingScreen from '@src/pages/tabs/Settings';
+import ShopScreen from '@src/pages/tabs/Shop';
 
 const Tab = createBottomTabNavigator();
 
-const AnimatedTabIcon = ({ focused, icon }: { focused: boolean; icon: any }) => {
+const AnimatedTabIcon = ({
+  focused,
+  icon,
+  themeColors,
+}: {
+  focused: boolean;
+  icon: any;
+  themeColors: any;
+}) => {
   const scale = useSharedValue(focused ? 1.2 : 1);
   const opacity = useSharedValue(focused ? 1 : 0.5);
 
@@ -36,20 +45,23 @@ const AnimatedTabIcon = ({ focused, icon }: { focused: boolean; icon: any }) => 
         source={icon}
         style={{ width: 20, height: 22 }}
         resizeMode="contain"
-        tintColor={focused ? colors.secondaryPurple : colors.black}
+        tintColor={focused ? themeColors.secondaryPurple : themeColors.black}
       />
     </Animated.View>
   );
 };
 
 const TabNavigator = () => {
+  const { t } = useTranslation();
+  const themeColors = useColors();
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colors.text,
-          borderTopColor: colors.border,
+          backgroundColor: themeColors.backgroundCard,
+          borderTopColor: themeColors.border,
           height: 72,
           borderTopWidth: 1,
           elevation: 8,
@@ -58,8 +70,8 @@ const TabNavigator = () => {
           shadowOpacity: 0.1,
           shadowRadius: 4,
         },
-        tabBarActiveTintColor: colors.secondaryPurple,
-        tabBarInactiveTintColor: colors.black,
+        tabBarActiveTintColor: themeColors.secondaryPurple,
+        tabBarInactiveTintColor: themeColors.black,
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
@@ -70,9 +82,13 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: t('tabs.home'),
           tabBarIcon: ({ focused }) => (
-            <AnimatedTabIcon focused={focused} icon={require('@src/assets/icons/homeLogo.png')} />
+            <AnimatedTabIcon
+              focused={focused}
+              icon={require('@src/assets/icons/homeLogo.png')}
+              themeColors={themeColors}
+            />
           ),
         }}
       />
@@ -80,29 +96,41 @@ const TabNavigator = () => {
         name="Shows"
         component={ShowsScreen}
         options={{
-          tabBarLabel: 'Shows',
+          tabBarLabel: t('tabs.shows'),
           tabBarIcon: ({ focused }) => (
-            <AnimatedTabIcon focused={focused} icon={require('@src/assets/icons/videoLogo.png')} />
+            <AnimatedTabIcon
+              focused={focused}
+              icon={require('@src/assets/icons/videoLogo.png')}
+              themeColors={themeColors}
+            />
           ),
         }}
       />
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            tabBarLabel: 'Search',
-            tabBarIcon: ({ focused }) => (
-              <AnimatedTabIcon focused={focused} icon={require('@src/assets/icons/searchLogo.png')} />
-            ),
-          }}
-        />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: t('tabs.search'),
+          tabBarIcon: ({ focused }) => (
+            <AnimatedTabIcon
+              focused={focused}
+              icon={require('@src/assets/icons/searchLogo.png')}
+              themeColors={themeColors}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Shop"
         component={ShopScreen}
         options={{
-          tabBarLabel: 'Shop',
+          tabBarLabel: t('tabs.shop'),
           tabBarIcon: ({ focused }) => (
-            <AnimatedTabIcon focused={focused} icon={require('@src/assets/icons/shoppingLogo.png')} />
+            <AnimatedTabIcon
+              focused={focused}
+              icon={require('@src/assets/icons/shoppingLogo.png')}
+              themeColors={themeColors}
+            />
           ),
         }}
       />
@@ -110,9 +138,13 @@ const TabNavigator = () => {
         name="Setting"
         component={SettingScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: t('tabs.profile'),
           tabBarIcon: ({ focused }) => (
-            <AnimatedTabIcon focused={focused} icon={require('@src/assets/icons/settingLogo.png')} />
+            <AnimatedTabIcon
+              focused={focused}
+              icon={require('@src/assets/icons/settingLogo.png')}
+              themeColors={themeColors}
+            />
           ),
         }}
       />
