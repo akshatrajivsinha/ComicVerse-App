@@ -84,6 +84,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+            appAuthRedirectScheme: 'com.frontendSection'
+        ]
     }
     signingConfigs {
         debug {
@@ -113,6 +116,8 @@ dependencies {
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
+        implementation platform('com.google.firebase:firebase-bom:32.7.0')
+        implementation("com.google.firebase:firebase-analytics")
     } else {
         implementation jscFlavor
     }
