@@ -10,6 +10,8 @@ import { useColors } from '@src/utils/colors';
 import { useAuthStore } from '@src/store/authStore';
 import { useThemeStore } from '@src/store/themeStore';
 import { useLanguageStore, languageOptions, Language } from '@src/store/languageStore';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { getAuth } from '@react-native-firebase/auth';
 
 export const useSettingsViewModel = () => {
   const { clearAuthToken } = useAuthStore();
@@ -43,8 +45,17 @@ export const useSettingsViewModel = () => {
     toggleLanguageDropdown();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     clearAuthToken();
+    try {
+  await Promise.allSettled([
+    GoogleSignin.signOut(),
+    getAuth().signOut(),
+    // Promise.resolve(LoginManager.logOut()),
+  ]);
+} catch {
+  return;
+}
   };
 
   return {

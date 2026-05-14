@@ -11,15 +11,23 @@ import {
 import { useAuthStore } from '@src/store/authStore';
 import auth from '@react-native-firebase/auth';
 import { loginWithGitHub } from '@src/config/githubAuth';
+import {
+  googleSignInStatusCodes,
+  loginWithGoogle,
+} from '@src/config/googleAuth';
 import { screenNames } from '@src/navigation/screenName';
 
 interface UseLandingPageViewModelProps {
   navigation: any;
 }
 
-const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => {
+const useLandingPageViewModel = ({
+  navigation,
+}: UseLandingPageViewModelProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] = useState<
+    'google' | 'github' | null
+  >(null);
   const [toast, setToast] = useState({
     visible: false,
     message: '',
@@ -27,7 +35,7 @@ const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => 
   });
 
   const bgOpacity = useSharedValue(1);
-  const setAuthToken = useAuthStore((state) => state.setAuthToken);
+  const setAuthToken = useAuthStore(state => state.setAuthToken);
 
   const images = [
     require('@src/assets/images/AvengerEndgamePoster.jpg'),
@@ -102,52 +110,86 @@ const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => 
   };
 
   const handleGitHubLogin = async () => {
-  if (loading) return;
+    if (loadingProvider) return;
 
-  setLoading(true);
+    setLoadingProvider('github');
 
-  try {
-    const githubAuth = await loginWithGitHub();
+    try {
+      const githubAuth = await loginWithGitHub();
 
-    if (!githubAuth?.accessToken) {
-      throw new Error('GitHub access token not found');
-    }
+      if (!githubAuth?.accessToken) {
+        throw new Error('GitHub access token not found');
+      }
 
-    const credential = auth.GithubAuthProvider.credential(
-      githubAuth.accessToken
-    );
-
-    const userCredential = await auth().signInWithCredential(credential);
-
-    const idToken = await userCredential.user.getIdToken();
-
-    setAuthToken(idToken);
-
-    showToast('GitHub login successful', 'success');
-  } catch (error: any) {
-    console.error('GitHub login error:', error);
-
-    if (error.code === 'USER_CANCELLED') {
-      showToast('Login cancelled', 'error');
-    } else if (
-      error.code === 'auth/account-exists-with-different-credential'
-    ) {
-      showToast(
-        'Account exists with another sign-in method',
-        'error'
+      const credential = auth.GithubAuthProvider.credential(
+        githubAuth.accessToken,
       );
-    } else {
-      showToast(error.message || 'GitHub login failed', 'error');
+
+      const userCredential = await auth().signInWithCredential(credential);
+
+      const idToken = await userCredential.user.getIdToken();
+
+      setAuthToken(idToken);
+
+      showToast('GitHub login successful', 'success');
+    } catch (error: any) {
+      console.error('GitHub login error:', error);
+
+      if (error.code === 'USER_CANCELLED') {
+        showToast('Login cancelled', 'error');
+      } else if (
+        error.code === 'auth/account-exists-with-different-credential'
+      ) {
+        showToast('Account exists with another sign-in method', 'error');
+      } else {
+        showToast(error.message || 'GitHub login failed', 'error');
+      }
+    } finally {
+      setLoadingProvider(null);
     }
-  } finally {
-    setLoading(false);
-  }
-};
+  };
+
+  const handleGoogleLogin = async () => {
+    if (loadingProvider) return;
+
+    setLoadingProvider('google');
+
+    try {
+      const googleAuth = await loginWithGoogle();
+      const credential = auth.GoogleAuthProvider.credential(googleAuth.idToken);
+      const userCredential = await auth().signInWithCredential(credential);
+      const idToken = await userCredential.user.getIdToken();
+
+      setAuthToken(idToken);
+
+      showToast('Google login successful', 'success');
+    } catch (error: any) {
+      console.error('Google login error:', error);
+
+      if (error.code === googleSignInStatusCodes.SIGN_IN_CANCELLED) {
+        showToast('Login cancelled', 'error');
+      } else if (error.code === googleSignInStatusCodes.IN_PROGRESS) {
+        showToast('Google login already in progress', 'error');
+      } else if (
+        error.code === googleSignInStatusCodes.PLAY_SERVICES_NOT_AVAILABLE
+      ) {
+        showToast('Google Play Services is not available', 'error');
+      } else if (
+        error.code === 'auth/account-exists-with-different-credential'
+      ) {
+        showToast('Account exists with another sign-in method', 'error');
+      } else {
+        showToast(error.message || 'Google login failed', 'error');
+      }
+    } finally {
+      setLoadingProvider(null);
+    }
+  };
 
   return {
     currentImageIndex,
     images,
-    loading,
+    loading: loadingProvider !== null,
     toast,
     titleStyle,
     buttonStyle,
@@ -156,8 +198,9 @@ const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => 
     handleRegister,
     showToast,
     hideToast,
-    handleGitHubLogin
+    handleGoogleLogin,
+    handleGitHubLogin,
   };
 };
 
-export default useLandingPageViewModel
+export default useLandingPageViewModel;

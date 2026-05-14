@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 
 import Animated, { createAnimatedComponent } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +15,7 @@ import { useColors } from '@src/utils/colors';
 import CustomButton from '@src/components/atom/CustomButton';
 import { createStyles } from '@src/pages/auth/LandingPage/styles';
 import useLandingPageViewModel from '@src/viewModels/auth/useLandingPageViewModel';
+import { isIos } from '@src/utils/platformCheck';
 
 const AnimatedImageBackground = createAnimatedComponent(ImageBackground);
 
@@ -29,6 +35,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
     handleLogin,
     handleRegister,
     hideToast,
+    handleGoogleLogin,
     handleGitHubLogin,
   } = useLandingPageViewModel({ navigation });
 
@@ -72,7 +79,8 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
           <CustomButton
             title="Google"
             icon={require('@src/assets/icons/googleLogo.png')}
-            onPress={handleLogin}
+            onPress={handleGoogleLogin}
+            disabled={loading}
             buttonStyle={dynamicStyles.socialLoginButton}
             textStyle={dynamicStyles.socialButtonTextRegister}
           />
@@ -90,12 +98,33 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             icon={require('@src/assets/icons/githubLogo.png')}
             iconTintColor="#FFFFFF"
             onPress={handleGitHubLogin}
-            loading={loading}
+            disabled={loading}
             buttonStyle={dynamicStyles.socialLoginButton}
             textStyle={dynamicStyles.socialButtonTextRegister}
           />
         </Animated.View>
-
+        <Animated.View
+          style={[dynamicStyles.containerSocialLoginButton, buttonStyle]}
+        >
+          <CustomButton
+            title={isIos ? 'LinkedIn' : 'Continue with LinkedIn'}
+            icon={require('@src/assets/icons/linkedinLogo.png')}
+            onPress={handleRegister}
+            buttonStyle={dynamicStyles.socialLoginButton2}
+            textStyle={dynamicStyles.socialButtonText}
+            customButtonContent={{ flexDirection: 'row', gap: 12 }}
+          />
+          {isIos && (
+            <CustomButton
+              title="Apple"
+              icon={require('@src/assets/icons/appleLogo.png')}
+              onPress={handleRegister}
+              buttonStyle={dynamicStyles.socialLoginButton2}
+              textStyle={dynamicStyles.socialButtonText}
+              customButtonContent={{ flexDirection: 'row', gap: 12 }}
+            />
+          )}
+        </Animated.View>
         <Animated.View style={[dynamicStyles.buttonContainer, buttonStyle]}>
           <CustomButton
             title="Login"
@@ -113,6 +142,12 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
           />
         </Animated.View>
       </SafeAreaView>
+
+      {loading && (
+        <View style={dynamicStyles.fullScreenLoader}>
+          <ActivityIndicator size="large" color={themeColors.text} />
+        </View>
+      )}
     </View>
   );
 };
