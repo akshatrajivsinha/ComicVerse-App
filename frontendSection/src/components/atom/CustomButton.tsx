@@ -16,6 +16,7 @@ interface CustomButtonProps {
   icon?: any;
   iconTintColor?: string;
   font?: string;
+  customButtonContent?: ViewStyle
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -30,6 +31,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   icon,
   iconTintColor,
   font = fonts.nunitoBold,
+  customButtonContent,
 }) => {
   return (
     <Pressable
@@ -47,7 +49,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       {loading ? (
         <ActivityIndicator animating={loading} color={colors.text} />
       ) : (
-        <View style={styles.buttonContent}>
+        <View style={[styles.buttonContent, customButtonContent]}>
           {icon && (
             <Image
               source={icon}
