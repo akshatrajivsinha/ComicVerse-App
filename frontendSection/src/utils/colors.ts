@@ -34,6 +34,7 @@ export const colors = {
   warning: '#FF9500',
   error: '#FF3B30',
   errorRed: '#EF4444',
+  teal: '#1a5252d6',
   
   // Border colors
   border: '#334155',

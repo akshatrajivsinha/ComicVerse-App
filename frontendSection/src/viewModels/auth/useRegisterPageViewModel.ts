@@ -7,6 +7,7 @@ import {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import { screenNames } from '@src/navigation/screenName';
 
 interface UseRegisterPageViewModelProps {
   navigation: any;
@@ -138,7 +139,7 @@ export const useRegisterPageViewModel = ({
           showToast('OTP Send Successfully', 'success');
 
           setTimeout(() => {
-            navigation.navigate('OTP', { phoneNumber: `91${phoneNumber}` });
+            navigation.navigate(screenNames.OTP, { phoneNumber: `91${phoneNumber}` });
           }, 2000);
         }
       } catch (error: any) {
@@ -179,7 +180,7 @@ export const useRegisterPageViewModel = ({
 
         if (response.data?.success) {
           showToast('OTP sent successfully', 'success');
-          navigation.navigate('OTP', { email });
+          navigation.navigate(screenNames.OTP, { email });
         } else {
           showToast(response.data?.error || 'Failed to send OTP', 'error');
         }

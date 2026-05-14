@@ -9,6 +9,7 @@ import {
   Easing,
 } from 'react-native-reanimated';
 import { useAuthStore } from '@src/store/authStore';
+import { screenNames } from '@src/navigation/screenName';
 
 interface UseLoginPageViewModelProps {
   navigation: any;
@@ -151,7 +152,7 @@ export const useLoginPageViewModel = ({navigation}: UseLoginPageViewModelProps) 
 
         if (response.data?.success) {
           showToast('OTP sent successfully', 'success');
-          navigation.navigate('OTPScreen', { phoneNumber: `91${phoneNumber}` });
+          navigation.navigate(screenNames.OTP, { phoneNumber: `91${phoneNumber}` });
         }
       } catch (error: any) {
         if (error.response) {

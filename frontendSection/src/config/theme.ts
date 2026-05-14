@@ -10,6 +10,7 @@ export const darkTheme = {
   black: '#FFFFFF',
   white: '#000000',
   textDark: '#29292cd6',
+  teal: '#225656e1'
 };
 
 export const lightTheme = {
@@ -24,6 +25,7 @@ export const lightTheme = {
   black: '#1A1A1A',
   white: '#FFFFFF',
   textDark: '#29292cd6',
+  teal: '#22565682'
 };
 
 export const themes = {

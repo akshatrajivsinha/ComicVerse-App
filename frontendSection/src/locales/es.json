@@ -44,5 +44,11 @@
     "search": "Buscar",
     "shop": "Tienda",
     "profile": "Configuración"
+  },
+  "home": {
+    "title": "ComicVerse",
+    "mustWatch": "Imprescindible ver",
+    "articles": "Artículos",
+    "upcomingMovies": "Próximas películas"
   }
 }

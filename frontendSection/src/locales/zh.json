@@ -44,5 +44,11 @@
     "search": "搜索",
     "shop": "商店",
     "profile": "设置"
+  },
+  "home": {
+    "title": "ComicVerse",
+    "mustWatch": "必看",
+    "articles": "文章",
+    "upcomingMovies": "即将上映的电影"
   }
 }

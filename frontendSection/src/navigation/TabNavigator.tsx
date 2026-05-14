@@ -9,11 +9,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { useColors } from '@src/utils/colors';
-import HomeScreen from '@src/pages/tabs/Home';
-import SearchScreen from '@src/pages/tabs/Search';
-import ShowsScreen from '@src/pages/tabs/Shows';
-import SettingScreen from '@src/pages/tabs/Settings';
-import ShopScreen from '@src/pages/tabs/Shop';
+import HomeScreen from '@src/pages/tabs/HomeTab/Home';
+import SearchScreen from '@src/pages/tabs/SearchTab';
+import ShowsScreen from '@src/pages/tabs/ShowsTab';
+import SettingScreen from '@src/pages/tabs/SettingsTab';
+import ShopScreen from '@src/pages/tabs/ShopTab';
+import { screenNames } from '@src/navigation/screenName';
 
 const Tab = createBottomTabNavigator();
 
@@ -79,7 +80,7 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name={screenNames.HOME}
         component={HomeScreen}
         options={{
           tabBarLabel: t('tabs.home'),
@@ -93,7 +94,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Shows"
+        name={screenNames.SHOWS}
         component={ShowsScreen}
         options={{
           tabBarLabel: t('tabs.shows'),
@@ -107,7 +108,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name={screenNames.SEARCH}
         component={SearchScreen}
         options={{
           tabBarLabel: t('tabs.search'),
@@ -121,7 +122,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Shop"
+        name={screenNames.SHOP}
         component={ShopScreen}
         options={{
           tabBarLabel: t('tabs.shop'),
@@ -135,7 +136,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Setting"
+        name={screenNames.SETTING}
         component={SettingScreen}
         options={{
           tabBarLabel: t('tabs.profile'),

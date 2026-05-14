@@ -8,6 +8,7 @@ import {
   Easing,
 } from 'react-native-reanimated';
 import { useAuthStore } from '@src/store/authStore';
+import { screenNames } from '@src/navigation/screenName';
 
 interface UseOTPScreenViewModelProps {
   navigation: any;
@@ -111,7 +112,7 @@ export const useOTPScreenViewModel = ({
         const token = response.data?.token;
         setAuthToken(token);
         showToast('OTP verified successfully', 'success');
-        navigation.navigate('MainTabs');
+        navigation.navigate(screenNames.MAIN_TABS);
       } else {
         showToast(response.data?.error || 'Invalid OTP', 'error');
       }

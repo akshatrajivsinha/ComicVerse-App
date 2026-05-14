@@ -44,5 +44,11 @@
     "search": "खोज",
     "shop": "दुकान",
     "profile": "सेटिंग्स"
+  },
+  "home": {
+    "title": "कॉमिकवर्स",
+    "mustWatch": "जरूर देखें",
+    "articles": "लेख",
+    "upcomingMovies": "आने वाली फिल्में"
   }
 }

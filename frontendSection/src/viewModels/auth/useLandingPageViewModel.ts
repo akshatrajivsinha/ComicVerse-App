@@ -11,6 +11,7 @@ import {
 import { useAuthStore } from '@src/store/authStore';
 import auth from '@react-native-firebase/auth';
 import { loginWithGitHub } from '@src/config/githubAuth';
+import { screenNames } from '@src/navigation/screenName';
 
 interface UseLandingPageViewModelProps {
   navigation: any;
@@ -85,11 +86,11 @@ const useLandingPageViewModel = ({navigation}: UseLandingPageViewModelProps) => 
   }));
 
   const handleLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate(screenNames.LOGIN);
   };
 
   const handleRegister = () => {
-    navigation.navigate('Register');
+    navigation.navigate(screenNames.REGISTER);
   };
 
   const showToast = (message: string, type: 'success' | 'error') => {

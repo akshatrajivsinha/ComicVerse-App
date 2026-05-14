@@ -44,5 +44,11 @@
     "search": "Search",
     "shop": "Shop",
     "profile": "Settings"
+  },
+  "home": {
+    "title": "ComicVerse",
+    "mustWatch": "Must Watch",
+    "articles": "Articles",
+    "upcomingMovies": "Upcoming Movies"
   }
 }

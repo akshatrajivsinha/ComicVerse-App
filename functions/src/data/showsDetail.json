@@ -1,0 +1,153 @@
+{
+  "showDetail": [
+    {
+      "id": "1",
+      "title": "Star Wars: The Force Awakens",
+      "heroImage":
+        "https://m.media-amazon.com/images/S/pv-target-images/5711853501daeb53006436b7d849359efc4316fab8d8826e5a011dc652ca1cd8.jpg",
+      "slug": "star-war-force-awakens",
+      "category": {
+        "title": "Star Wars",
+        "image":
+          "https://lumiere-a.akamaihd.net/v1/images/star-wars-section-bg-mobile_6d8ce1a0.jpeg"
+      },
+      "relatedSuggestions": [
+        {
+          "id": "2",
+          "slug": "zack-snyder-justice-league",
+          "title": "Zack Snyder's Justice League",
+          "heroImage":
+            "https://imageio.forbes.com/specials-images/imageserve/6052580b2b9711b7822ff1cf/0x0.jpg?format=jpg&height=600&width=1200&fit=bounds"
+        },
+        {
+          "id": "3",
+          "slug": "iron-man",
+          "title": "Iron Man 2",
+          "heroImage":
+            "https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/4331/644331-h"
+        }
+      ],
+      "createdAt": null
+    },
+
+    {
+      "id": "2",
+      "title": "Zack Snyder's Justice League",
+      "heroImage":
+        "https://imageio.forbes.com/specials-images/imageserve/6052580b2b9711b7822ff1cf/0x0.jpg?format=jpg&height=600&width=1200&fit=bounds",
+      "slug": "zack-snyder-justice-league",
+      "category": {
+        "title": "DC",
+        "image":
+          "https://cdn.mos.cms.futurecdn.net/8oQ7vFQwzN7fJQ7j7h4w6R.jpg"
+      },
+      "relatedSuggestions": [
+        {
+          "id": "4",
+          "slug": "black-adam",
+          "title": "Black Adam",
+          "heroImage":
+            "https://images.yourstory.com/cs/210/d72b5ef09db411ebb4167b901dac470c/Imageld6a-1666269188044.jpg?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75"
+        },
+        {
+          "id": "5",
+          "slug": "the-batman",
+          "title": "The Batman",
+          "heroImage":
+            "https://images.thedirect.com/media/article_full/batman-sequel.jpg?imgeng=/cmpr_60/w_1280"
+        }
+      ],
+      "createdAt": null
+    },
+
+    {
+      "id": "3",
+      "title": "Iron Man 2",
+      "heroImage":
+        "https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/4331/644331-h",
+      "slug": "iron-man",
+      "category": {
+        "title": "Marvel",
+        "image":
+          "https://lumiere-a.akamaihd.net/v1/images/marvel-logo_31d6cfe0.png"
+      },
+      "relatedSuggestions": [
+        {
+          "id": "1",
+          "slug": "star-war-force-awakens",
+          "title": "Star Wars: The Force Awakens",
+          "heroImage":
+            "https://m.media-amazon.com/images/S/pv-target-images/5711853501daeb53006436b7d849359efc4316fab8d8826e5a011dc652ca1cd8.jpg"
+        },
+        {
+          "id": "4",
+          "slug": "black-adam",
+          "title": "Black Adam",
+          "heroImage":
+            "https://images.yourstory.com/cs/210/d72b5ef09db411ebb4167b901dac470c/Imageld6a-1666269188044.jpg?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75"
+        }
+      ],
+      "createdAt": null
+    },
+
+    {
+      "id": "4",
+      "title": "Black Adam",
+      "heroImage":
+        "https://images.yourstory.com/cs/210/d72b5ef09db411ebb4167b901dac470c/Imageld6a-1666269188044.jpg?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75",
+      "slug": "black-adam",
+      "category": {
+        "title": "DC",
+        "image":
+          "https://cdn.mos.cms.futurecdn.net/8oQ7vFQwzN7fJQ7j7h4w6R.jpg"
+      },
+      "relatedSuggestions": [
+        {
+          "id": "2",
+          "slug": "zack-snyder-justice-league",
+          "title": "Zack Snyder's Justice League",
+          "heroImage":
+            "https://imageio.forbes.com/specials-images/imageserve/6052580b2b9711b7822ff1cf/0x0.jpg?format=jpg&height=600&width=1200&fit=bounds"
+        },
+        {
+          "id": "5",
+          "slug": "the-batman",
+          "title": "The Batman",
+          "heroImage":
+            "https://images.thedirect.com/media/article_full/batman-sequel.jpg?imgeng=/cmpr_60/w_1280"
+        }
+      ],
+      "createdAt": null
+    },
+
+    {
+      "id": "5",
+      "title": "The Batman",
+      "heroImage":
+        "https://images.thedirect.com/media/article_full/batman-sequel.jpg?imgeng=/cmpr_60/w_1280",
+      "slug": "the-batman",
+      "category": {
+        "title": "DC",
+        "image":
+          "https://cdn.mos.cms.futurecdn.net/8oQ7vFQwzN7fJQ7j7h4w6R.jpg"
+      },
+      "relatedSuggestions": [
+        {
+          "id": "2",
+          "slug": "zack-snyder-justice-league",
+          "title": "Zack Snyder's Justice League",
+          "heroImage":
+            "https://imageio.forbes.com/specials-images/imageserve/6052580b2b9711b7822ff1cf/0x0.jpg?format=jpg&height=600&width=1200&fit=bounds"
+        },
+        {
+          "id": "4",
+          "slug": "black-adam",
+          "title": "Black Adam",
+          "heroImage":
+            "https://images.yourstory.com/cs/210/d72b5ef09db411ebb4167b901dac470c/Imageld6a-1666269188044.jpg?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75"
+        }
+      ],
+      "createdAt": null
+    }
+  ]
+}
