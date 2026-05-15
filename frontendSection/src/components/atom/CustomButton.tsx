@@ -1,5 +1,13 @@
 import React from 'react';
-import { Pressable, ActivityIndicator, StyleSheet, ViewStyle, TextStyle, Image, View } from 'react-native';
+import {
+  Pressable,
+  ActivityIndicator,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  Image,
+  View,
+} from 'react-native';
 import { colors } from '@src/utils/colors';
 import CustomText from '@src/components/atom/CustomText';
 import { fonts } from '@src/config/fonts';
@@ -16,7 +24,7 @@ interface CustomButtonProps {
   icon?: any;
   iconTintColor?: string;
   font?: string;
-  customButtonContent?: ViewStyle
+  customButtonContent?: ViewStyle;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -58,7 +66,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
               tintColor={iconTintColor}
             />
           )}
-          <CustomText font={font} style={[styles.buttonText, textStyle]}>{title}</CustomText>
+          <CustomText font={font} style={[styles.buttonText, textStyle]}>
+            {title}
+          </CustomText>
         </View>
       )}
     </Pressable>

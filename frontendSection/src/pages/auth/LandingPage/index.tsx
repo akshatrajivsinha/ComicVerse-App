@@ -16,6 +16,7 @@ import CustomButton from '@src/components/atom/CustomButton';
 import { createStyles } from '@src/pages/auth/LandingPage/styles';
 import useLandingPageViewModel from '@src/viewModels/auth/useLandingPageViewModel';
 import { isIos } from '@src/utils/platformCheck';
+import { LinkedInLoginModal } from '@src/config/linkedInAuth';
 
 const AnimatedImageBackground = createAnimatedComponent(ImageBackground);
 
@@ -29,6 +30,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
     images,
     loading,
     toast,
+    linkedInModalRef,
     titleStyle,
     buttonStyle,
     bgAnimatedStyle,
@@ -37,6 +39,9 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
     hideToast,
     handleGoogleLogin,
     handleGitHubLogin,
+    handleLinkedInLogin,
+    handleLinkedInSuccess,
+    handleLinkedInError,
   } = useLandingPageViewModel({ navigation });
 
   const themeColors = useColors();
@@ -109,7 +114,8 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
           <CustomButton
             title={isIos ? 'LinkedIn' : 'Continue with LinkedIn'}
             icon={require('@src/assets/icons/linkedinLogo.png')}
-            onPress={handleRegister}
+            onPress={handleLinkedInLogin}
+            disabled={loading}
             buttonStyle={dynamicStyles.socialLoginButton2}
             textStyle={dynamicStyles.socialButtonText}
             customButtonContent={{ flexDirection: 'row', gap: 12 }}
@@ -142,6 +148,12 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
           />
         </Animated.View>
       </SafeAreaView>
+
+      <LinkedInLoginModal
+        ref={linkedInModalRef}
+        onSuccess={handleLinkedInSuccess}
+        onError={handleLinkedInError}
+      />
 
       {loading && (
         <View style={dynamicStyles.fullScreenLoader}>

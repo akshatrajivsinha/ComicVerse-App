@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   useSharedValue,
@@ -15,6 +15,12 @@ import {
   googleSignInStatusCodes,
   loginWithGoogle,
 } from '@src/config/googleAuth';
+import {
+  isLinkedInConfigured,
+  type LinkedInError,
+  type LinkedInModalRef,
+  type LinkedInToken,
+} from '@src/config/linkedInAuth';
 import { screenNames } from '@src/navigation/screenName';
 
 interface UseLandingPageViewModelProps {
@@ -26,7 +32,7 @@ const useLandingPageViewModel = ({
 }: UseLandingPageViewModelProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadingProvider, setLoadingProvider] = useState<
-    'google' | 'github' | null
+    'google' | 'github' | 'linkedin' | null
   >(null);
   const [toast, setToast] = useState({
     visible: false,
@@ -35,6 +41,7 @@ const useLandingPageViewModel = ({
   });
 
   const bgOpacity = useSharedValue(1);
+  const linkedInModalRef = useRef<LinkedInModalRef>(null);
   const setAuthToken = useAuthStore(state => state.setAuthToken);
 
   const images = [
@@ -186,11 +193,50 @@ const useLandingPageViewModel = ({
     }
   };
 
+  const handleLinkedInLogin = () => {
+    if (loadingProvider) return;
+
+    if (!isLinkedInConfigured()) {
+      showToast('LinkedIn login is not configured', 'error');
+      return;
+    }
+
+    linkedInModalRef.current?.open();
+  };
+
+  const handleLinkedInSuccess = (token: LinkedInToken) => {
+    setLoadingProvider('linkedin');
+
+    try {
+      const linkedInToken = token.access_token ?? token.authentication_code;
+
+      if (!linkedInToken) {
+        throw new Error('LinkedIn access token not found');
+      }
+
+      setAuthToken(linkedInToken);
+
+      showToast('LinkedIn login successful', 'success');
+    } catch (error: any) {
+      console.error('LinkedIn login error:', error);
+      showToast(error.message || 'LinkedIn login failed', 'error');
+    } finally {
+      setLoadingProvider(null);
+    }
+  };
+
+  const handleLinkedInError = (error: LinkedInError) => {
+    setLoadingProvider(null);
+    console.error('LinkedIn login error:', error);
+    showToast(error.message || 'LinkedIn login failed', 'error');
+  };
+
   return {
     currentImageIndex,
     images,
     loading: loadingProvider !== null,
     toast,
+    linkedInModalRef,
     titleStyle,
     buttonStyle,
     bgAnimatedStyle,
@@ -200,6 +246,9 @@ const useLandingPageViewModel = ({
     hideToast,
     handleGoogleLogin,
     handleGitHubLogin,
+    handleLinkedInLogin,
+    handleLinkedInSuccess,
+    handleLinkedInError,
   };
 };
 
