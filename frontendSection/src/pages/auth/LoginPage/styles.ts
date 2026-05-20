@@ -4,15 +4,18 @@ import { colors } from '@src/utils/colors';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundDark,
+    // backgroundColor: colors.backgroundDark,
     justifyContent:'space-between'
   },
   innerContainer: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 34,
     fontWeight: '800',
+    color: colors.text,
+  },
+  footerTitle:{
     color: colors.text,
   },
   subtitle: {
@@ -22,9 +25,11 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
   toggleContainer: {
+    width:'100%',
     flexDirection: 'row',
     marginBottom: 25,
-    backgroundColor: colors.backgroundCard,
+    alignItems:'center',
+    backgroundColor: colors.backgroundLight,
     borderRadius: 12,
     padding: 4,
     position: 'relative',
@@ -32,10 +37,10 @@ export const styles = StyleSheet.create({
   toggleIndicator: {
     position: 'absolute',
     left: 4,
-    width: '48%',
-    height: '98%',
+    width: '49%',
+    height: '100%',
     top: 4,
-    backgroundColor: colors.text,
+    backgroundColor: colors.backgroundCard,
     borderRadius: 8,
   },
   toggleButton: {
@@ -56,31 +61,32 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
   },
   toggleButtonTextActive: {
-    color: colors.secondaryPurple,
+    color: colors.text,
   },
   toggleButtonTextInactive: {
-    color: colors.textSlate,
+    color: colors.secondaryPurple,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.backgroundCard,
+    backgroundColor: colors.backgroundLight,
     borderRadius: 14,
     paddingHorizontal: 16,
     height: 58,
     marginBottom: 25,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.text,
   },
   prefix: {
-    color: colors.text,
+    color: colors.black,
     fontSize: 16,
     marginRight: 8,
   },
   input: {
     flex: 1,
-    color: colors.text,
-    fontSize: 16,
+    color: colors.black,
+    fontSize: 16
+
   },
   button: {
     height: 58,
@@ -96,6 +102,6 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: colors.secondaryPurple,
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: '800',
   },
 });

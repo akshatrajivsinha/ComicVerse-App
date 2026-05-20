@@ -23,7 +23,7 @@ const CategoriesFlatList = ({ categories, loading, categoryFlatList }: Categorie
           renderItem={({ item }) => (
             <CircularImageCard
               imageUri={item.image}
-              size={70}
+              size={60}
               containerStyles={categoryFlatList}
             />
           )}

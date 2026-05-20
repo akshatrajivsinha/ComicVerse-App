@@ -31,7 +31,7 @@ export const styles = (themeColors: ThemeColors) =>
     },
     metaText: {
       fontSize: 14,
-      color: themeColors.textSlate,
+      color: themeColors.text,
     },
     description: {
       fontSize: 16,
@@ -40,7 +40,6 @@ export const styles = (themeColors: ThemeColors) =>
       marginBottom: 24,
     },
     heroContainer: {
-      height: HEADER_HEIGHT,
       position: 'relative',
       overflow: 'hidden',
     },
@@ -58,7 +57,7 @@ export const styles = (themeColors: ThemeColors) =>
     },
     heroContent: {
       position: 'absolute',
-      bottom: 30,
+      bottom: 0,
       left: 20,
       right: 20,
     },

@@ -5,6 +5,7 @@ interface ThemeColors {
   textSlate: string;
   text: string;
   teal: string;
+  backgroundLight: string;
 }
 
 export const createStyles = (themeColors: ThemeColors) =>
@@ -16,7 +17,7 @@ export const createStyles = (themeColors: ThemeColors) =>
     scrollViewContainer: {
       flexGrow:1,
       gap: 14,
-      marginTop:18,
+      marginTop:8,
       paddingBottom:25
     },
     innerContainer: {
@@ -31,6 +32,12 @@ export const createStyles = (themeColors: ThemeColors) =>
     },
     showCardText: {
       color: themeColors.text,
+      marginBottom: 4,
+      marginLeft: 12,
+      fontSize: 22,
+    },
+    showCardTextStory:{
+      color: themeColors.backgroundLight,
       marginBottom: 4,
       marginLeft: 12,
       fontSize: 22,

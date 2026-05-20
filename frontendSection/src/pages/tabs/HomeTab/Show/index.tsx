@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
-import { View, Animated, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Animated, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
 import { useColors } from '@src/utils/colors';
@@ -13,6 +12,7 @@ import BannersFlatList from '@src/components/organism/BannersFlatList';
 import ShowsFlatList from '@src/components/organism/ShowsFlatList';
 import { createStyles } from '@src/pages/tabs/HomeTab/Home/styles';
 import ShowDetailSkeleton from '@src/pages/tabs/HomeTab/Show/components/ShowDetailSkeleton';
+import VideoPlayerCard from '@src/components/molecule/VideoPlayerCard';
 
 const ShowDetail = () => {
   const { showDetail, goBack, upcomingMovies, loading } = useShowDetailViewModel();
@@ -22,17 +22,6 @@ const ShowDetail = () => {
   const dynamicStyles = styles(themeColors);
   const homeStyles = createStyles(themeColors);
 
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const imageScale = scrollY.interpolate({
-    inputRange: [-200, 0],
-    outputRange: [1.4, 1],
-    extrapolate: 'clamp',
-  });
-  const imageTranslate = scrollY.interpolate({
-    inputRange: [0, 300],
-    outputRange: [0, -80],
-    extrapolate: 'clamp',
-  });
 
   if (loading && !showDetail) {
     return <ShowDetailSkeleton />;
@@ -40,57 +29,27 @@ const ShowDetail = () => {
 
   return (
     <SafeAreaView style={dynamicStyles.container}>
-      <Animated.ScrollView
+      <ScrollView
         bounces
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  y: scrollY,
-                },
-              },
-            },
-          ],
-          {
-            useNativeDriver: true,
-          },
-        )}
       >
         <View style={dynamicStyles.heroContainer}>
-          <Animated.Image
-            source={{
-              uri: showDetail?.heroImage,
-            }}
-            style={[
-              dynamicStyles.heroImage,
-              {
-                transform: [
-                  {
-                    scale: imageScale,
-                  },
-                  {
-                    translateY: imageTranslate,
-                  },
-                ],
-              },
-            ]}
-          />
-
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.95)']}
-            style={dynamicStyles.gradient}
-          />
-
+          
           <BackButton onPress={goBack} />
+           <VideoPlayerCard
+              videoUri={require('@src/assets/videos/avengerEndgame.mp4') || showDetail?.videoUri}
+              aspectRatio="16/9"
+              height={189}
+              poster={showDetail?.poster || ""}
+              categoryImage={showDetail?.categoryImage || ""}
+              categoryTitle={showDetail?.title || ""}
+              isMuted={true}
+              autoPlay={false}
+              controlsMode="custom"
+            />
 
-          <View style={dynamicStyles.heroContent}>
-            <Animated.Text style={dynamicStyles.title}>
-              {showDetail?.title}
-            </Animated.Text>
-
+      
             <View style={dynamicStyles.metaRow}>
               <View style={dynamicStyles.metaBadge}>
                 <Animated.Text style={dynamicStyles.metaText}>
@@ -110,14 +69,8 @@ const ShowDetail = () => {
                 </Animated.Text>
               </View>
             </View>
-
-            <TouchableOpacity style={dynamicStyles.playButton}>
-              <Animated.Text style={dynamicStyles.playButtonText}>
-                Watch Now
-              </Animated.Text>
-            </TouchableOpacity>
           </View>
-        </View>
+
 
         <View style={dynamicStyles.contentContainer}>
           <Animated.Text style={dynamicStyles.sectionTitle}>
@@ -150,7 +103,7 @@ const ShowDetail = () => {
         />
 
         <View style={{ height: 60 }} />
-      </Animated.ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

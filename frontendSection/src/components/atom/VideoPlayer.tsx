@@ -64,7 +64,6 @@ const createStyles = (themeColors: any, height?: number) => {
       height: calculatedHeight || 200,
       backgroundColor: themeColors.backgroundCard,
       overflow: 'hidden',
-      borderWidth: 1
     },
     video: {
       width: '100%',

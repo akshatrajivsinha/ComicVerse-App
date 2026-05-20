@@ -1,0 +1,142 @@
+[
+    {
+      "id": "1",
+      "slug": "naruto",
+      "imageUri": "https://m.media-amazon.com/images/I/91RpwagB7uL._AC_UF1000,1000_QL80_.jpg",
+      "smallImageUri": "https://www.hanashi.fr/wp-content/uploads/2025/12/manga_plus_ban-1500x500.jpg",
+      "category": "Manga",
+      "title": "Naruto - The epic adventures of the world's greatest ninja!",
+      "description": "Naruto follows the journey of Naruto Uzumaki, a young ninja who dreams of becoming the Hokage, the strongest leader of his village. Filled with friendship, battles, sacrifice, and emotional storytelling, Naruto becomes one of the most iconic anime and manga series ever created.",
+      "author": "Masashi Kishimoto",
+      "releaseYear": "1999",
+      "rating": 4.9,
+      "totalEpisodes": 720,
+      "language": "Japanese",
+      "genre": ["Action", "Adventure", "Fantasy"],
+      "relatedStories": [
+        {
+          "id": "101",
+          "slug": "boruto",
+          "title": "Boruto: Naruto Next Generations",
+          "imageUri": "https://m.media-amazon.com/images/I/81lQ5N0QwJL._UF1000,1000_QL80_.jpg"
+        },
+        {
+          "id": "102",
+          "slug": "one-piece",
+          "title": "One Piece",
+          "imageUri": "https://m.media-amazon.com/images/I/91Uev6etXKL._UF1000,1000_QL80_.jpg"
+        },
+        {
+          "id": "103",
+          "slug": "attack-on-titan",
+          "title": "Attack on Titan",
+          "imageUri": "https://m.media-amazon.com/images/I/81aC7M8K9xL.jpg"
+        }
+      ],
+      "tags": ["Ninja", "Anime", "Shonen", "Adventure"],
+      "isTrending": true
+    },
+    {
+      "id": "2",
+      "slug": "wonder-woman",
+      "imageUri": "https://media.newyorker.com/photos/593581e785bd115baccba6d2/master/pass/Lane-Ten-Things-about-Wonder-Woman.jpg",
+      "smallImageUri": "https://1000logos.net/wp-content/uploads/2017/01/DC-Comics-Logo-1972.png",
+      "category": "DC",
+      "title": "Wonder Woman - is a 2017 superhero film based on the DC Comics character Wonder Woman.",
+      "description": "Wonder Woman tells the story of Diana, an Amazonian warrior princess who leaves her hidden island home to help save humanity during World War I. The movie combines action, emotion, mythology, and heroism while showcasing one of DC's most powerful superheroes.",
+      "author": "DC Comics",
+      "releaseYear": "2017",
+      "rating": 4.7,
+      "duration": "2h 21m",
+      "language": "English",
+      "genre": ["Action", "Fantasy", "Superhero"],
+      "relatedStories": [
+        {
+          "id": "201",
+          "slug": "justice-league",
+          "title": "Justice League",
+          "imageUri": "https://m.media-amazon.com/images/I/81z8xJUzK+L.jpg"
+        },
+        {
+          "id": "202",
+          "slug": "batman-v-superman",
+          "title": "Batman v Superman",
+          "imageUri": "https://m.media-amazon.com/images/I/91Dz1GmA5-L._UF1000,1000_QL80_.jpg"
+        },
+        {
+          "id": "203",
+          "slug": "aquaman",
+          "title": "Aquaman",
+          "imageUri": "https://m.media-amazon.com/images/I/91KkWf50SoL._UF1000,1000_QL80_.jpg"
+        }
+      ],
+      "tags": ["DC", "Hero", "Action", "Warrior"],
+      "isTrending": true
+    },
+    {
+      "id": "3",
+      "slug": "spider-man",
+      "imageUri": "https://m.media-amazon.com/images/I/81GqtNbs+PL.jpg",
+      "smallImageUri": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Marvel_Cinematic_Universe_logo.png",
+      "category": "Marvel",
+      "title": "Spider-Man - The friendly neighborhood superhero protecting New York City.",
+      "description": "Spider-Man follows Peter Parker, a teenager who gains spider-like powers after being bitten by a radioactive spider. Balancing school life and superhero responsibilities, Peter faces dangerous villains while learning that with great power comes great responsibility.",
+      "author": "Marvel Comics",
+      "releaseYear": "2002",
+      "rating": 4.8,
+      "language": "English",
+      "genre": ["Action", "Adventure", "Superhero"],
+      "relatedStories": [
+        {
+          "id": "301",
+          "slug": "iron-man",
+          "title": "Iron Man",
+          "imageUri": "https://m.media-amazon.com/images/I/81deHfM9hJL.jpg"
+        },
+        {
+          "id": "302",
+          "slug": "doctor-strange",
+          "title": "Doctor Strange",
+          "imageUri": "https://m.media-amazon.com/images/I/81C42-gv4PL.jpg"
+        },
+        {
+          "id": "303",
+          "slug": "avengers-endgame",
+          "title": "Avengers: Endgame",
+          "imageUri": "https://m.media-amazon.com/images/I/81ExhpBEbHL.jpg"
+        }
+      ],
+      "tags": ["Marvel", "Spider-Man", "Superhero"],
+      "isTrending": false
+    },
+    {
+      "id": "4",
+      "slug": "star-wars",
+      "imageUri": "https://m.media-amazon.com/images/I/71niXI3lxlL.jpg",
+      "smallImageUri": "https://upload.wikimedia.org/wikipedia/commons/6/66/Star_Wars_Logo.svg",
+      "category": "Sci-Fi",
+      "title": "Star Wars - A legendary battle between the Jedi and the Sith across the galaxy.",
+      "description": "Star Wars is an epic science fiction franchise featuring intergalactic wars, powerful Jedi warriors, dark Sith lords, and unforgettable adventures. The saga explores themes of hope, destiny, family, and the battle between good and evil.",
+      "author": "George Lucas",
+      "releaseYear": "1977",
+      "rating": 4.9,
+      "language": "English",
+      "genre": ["Sci-Fi", "Adventure", "Fantasy"],
+      "relatedStories": [
+        {
+          "id": "401",
+          "slug": "the-mandalorian",
+          "title": "The Mandalorian",
+          "imageUri": "https://m.media-amazon.com/images/I/81G+N4t6w-L.jpg"
+        },
+        {
+          "id": "402",
+          "slug": "obi-wan-kenobi",
+          "title": "Obi-Wan Kenobi",
+          "imageUri": "https://m.media-amazon.com/images/I/71Q9jS8H3-L.jpg"
+        }
+      ],
+      "tags": ["Galaxy", "Jedi", "Sci-Fi"],
+      "isTrending": true
+    }
+  ]

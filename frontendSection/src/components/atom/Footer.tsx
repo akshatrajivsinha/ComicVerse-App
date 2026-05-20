@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TextStyle } from 'react-native';
 import { colors } from '@src/utils/colors';
 import CustomText from '@src/components/atom/CustomText';
 import { fonts } from '@src/config/fonts';
 
-const Footer = () => {
+const Footer = ({textStyle}: {textStyle?:TextStyle}) => {
   return (
     <View style={styles.container}>
-      <CustomText font={fonts.nunitoMedium} style={styles.text}>© 2026 ComicVerse App. All rights reserved.</CustomText>
+      <CustomText font={fonts.nunitoMedium} style={[styles.text, textStyle]}>© 2026 ComicVerse App. All rights reserved.</CustomText>
     </View>
   );
 };

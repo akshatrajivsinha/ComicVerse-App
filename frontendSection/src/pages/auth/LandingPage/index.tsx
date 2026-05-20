@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-
-import Animated, { createAnimatedComponent } from 'react-native-reanimated';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { fonts } from '@src/config/fonts';
 import Toast from '@src/components/atom/Toast';
@@ -17,8 +12,7 @@ import { createStyles } from '@src/pages/auth/LandingPage/styles';
 import useLandingPageViewModel from '@src/viewModels/auth/useLandingPageViewModel';
 import { isIos } from '@src/utils/platformCheck';
 import { LinkedInLoginModal } from '@src/config/linkedInAuth';
-
-const AnimatedImageBackground = createAnimatedComponent(ImageBackground);
+import { PinterestShowcaseBackground } from '@src/components/organism/PinterestShowcaseBackground';
 
 interface LandingPageProps {
   navigation: any;
@@ -26,14 +20,12 @@ interface LandingPageProps {
 
 const LandingPage = ({ navigation }: LandingPageProps) => {
   const {
-    currentImageIndex,
     images,
     loading,
     toast,
     linkedInModalRef,
     titleStyle,
     buttonStyle,
-    bgAnimatedStyle,
     handleLogin,
     handleRegister,
     hideToast,
@@ -54,19 +46,20 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
         { backgroundColor: themeColors.backgroundDark },
       ]}
     >
-      <AnimatedImageBackground
-        source={images[currentImageIndex]}
-        style={[StyleSheet.absoluteFill, bgAnimatedStyle]}
-        resizeMode="cover"
-      />
+      <PinterestShowcaseBackground images={images} />
 
       <SafeAreaView style={dynamicStyles.container}>
-        <Toast
-          visible={toast.visible}
-          message={toast.message}
-          type={toast.type}
-          onHide={hideToast}
+        
+
+        <LinearGradient
+          colors={[
+            'rgba(10, 10, 14, 0.0)',
+            'rgba(10, 10, 14, 0.6)',
+            'rgba(10, 10, 14, 0.85)',
+          ]}
+          style={StyleSheet.absoluteFill}
         />
+
         <View style={dynamicStyles.innerContainer}>
           <Animated.Text style={[dynamicStyles.title, titleStyle]}>
             ComicVerse
@@ -78,6 +71,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             Enter the World of Heroes
           </Animated.Text>
         </View>
+
         <Animated.View
           style={[dynamicStyles.socialButtonContainer, buttonStyle]}
         >
@@ -108,6 +102,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             textStyle={dynamicStyles.socialButtonTextRegister}
           />
         </Animated.View>
+
         <Animated.View
           style={[dynamicStyles.containerSocialLoginButton, buttonStyle]}
         >
@@ -131,6 +126,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             />
           )}
         </Animated.View>
+
         <Animated.View style={[dynamicStyles.buttonContainer, buttonStyle]}>
           <CustomButton
             title="Login"
@@ -139,7 +135,7 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
             textStyle={dynamicStyles.buttonText}
             font={fonts.nunitoSemiBold}
           />
-
+          
           <CustomButton
             title="Register"
             onPress={handleRegister}
@@ -160,6 +156,12 @@ const LandingPage = ({ navigation }: LandingPageProps) => {
           <ActivityIndicator size="large" color={themeColors.text} />
         </View>
       )}
+      <Toast
+          visible={toast.visible}
+          message={toast.message}
+          type={toast.type}
+          onHide={hideToast}
+        />
     </View>
   );
 };

@@ -7,6 +7,7 @@ import RegisterPage from '@src/pages/auth/RegisterPage';
 import OTPScreen from '@src/pages/auth/OTPScreen';
 import TabNavigator from '@src/navigation/TabNavigator';
 import ShowDetail from '@src/pages/tabs/HomeTab/Show';
+import StoryPage from '@src/pages/tabs/HomeTab/StoryPage';
 import { useAuthStore } from '@src/store/authStore';
 import { screenNames } from '@src/navigation/screenName';
 
@@ -38,17 +39,18 @@ const MainStack = () => {
     >
       <Stack.Screen name={screenNames.MAIN_TABS} component={TabNavigator} />
       <Stack.Screen name={screenNames.SHOW_DETAIL} component={ShowDetail} />
+      <Stack.Screen name={screenNames.STORY_PAGE} component={StoryPage} />
     </Stack.Navigator>
   );
 };
 
 const AppNavigator = () => {
-  const authToken = useAuthStore((state) => state.authToken);
+  const authToken = useAuthStore(state => state.authToken);
 
   return (
-      <NavigationContainer>
-        {authToken ? <MainStack /> : <AuthStack />}
-      </NavigationContainer>
+    <NavigationContainer>
+      {authToken ? <MainStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 };
 

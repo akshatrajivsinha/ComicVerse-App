@@ -10,6 +10,7 @@ import {
 } from 'react-native-reanimated';
 import { useAuthStore } from '@src/store/authStore';
 import { screenNames } from '@src/navigation/screenName';
+import { Dimensions } from 'react-native';
 
 interface UseLoginPageViewModelProps {
   navigation: any;
@@ -27,6 +28,8 @@ export const useLoginPageViewModel = ({navigation}: UseLoginPageViewModelProps) 
     type: 'success' as 'success' | 'error',
   });
   const setAuthToken = useAuthStore((state) => state.setAuthToken);
+
+  const WIDTH_DIMENSION = Dimensions.get('screen').width
 
   const titleY = useSharedValue(50);
   const inputY = useSharedValue(80);
@@ -86,7 +89,7 @@ export const useLoginPageViewModel = ({navigation}: UseLoginPageViewModelProps) 
         );
       },
     );
-  });
+},[loginType, toggleTranslateX, passwordOpacity, passwordTranslateY, buttonY]);
 
   const titleStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: titleY.value }],
@@ -104,7 +107,7 @@ export const useLoginPageViewModel = ({navigation}: UseLoginPageViewModelProps) 
   }));
 
   const toggleIndicatorStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: toggleTranslateX.value * 185 }],
+    transform: [{ translateX: toggleTranslateX.value * (7 * WIDTH_DIMENSION/16) }],
   }));
 
   const passwordFieldStyle = useAnimatedStyle(() => ({

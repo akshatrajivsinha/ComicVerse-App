@@ -5,12 +5,14 @@ export const darkTheme = {
   text: '#FFFFFF',
   textSlate: '#A0A8D0',
   primaryBlue: '#6C63FF',
-  secondaryPurple:  '#6344efff',
+  secondaryPurple: '#6344efff',
   border: '#2D3561',
   black: '#FFFFFF',
   white: '#000000',
   textDark: '#29292cd6',
-  teal: '#225656e1'
+  teal: '#225656e1',
+  successGreen: '#10B981',
+  errorRed: '#EF4444',
 };
 
 export const lightTheme = {
@@ -25,7 +27,9 @@ export const lightTheme = {
   black: '#1A1A1A',
   white: '#FFFFFF',
   textDark: '#29292cd6',
-  teal: '#22565682'
+  teal: '#225656b8',
+  successGreen: '#10B981',
+  errorRed: '#EF4444',
 };
 
 export const themes = {

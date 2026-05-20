@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   useSharedValue,
   useAnimatedStyle,
@@ -12,17 +12,40 @@ import { useThemeStore } from '@src/store/themeStore';
 import { useLanguageStore, languageOptions, Language } from '@src/store/languageStore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getAuth } from '@react-native-firebase/auth';
+import { getUserByDatabaseToken, UserProfile } from '@src/utils/api'; 
 
 export const useSettingsViewModel = () => {
-  const { clearAuthToken } = useAuthStore();
+  const { authToken, clearAuthToken } = useAuthStore();
   const { language, setLanguage } = useLanguageStore();
   const { theme, toggleTheme } = useThemeStore();
   const themeColors = useColors();
   const { t } = useTranslation();
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [userData, setUserData] = useState<UserProfile | null>(null);
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   const dropdownHeight = useSharedValue(0);
   const dropdownOpacity = useSharedValue(0);
+
+  const fetchUserData = useCallback(async () => {
+    if (!authToken) return;
+    setLoadingProfile(true);
+    
+    try {
+      const result = await getUserByDatabaseToken(authToken);
+      if (result.success && result.user) {
+        setUserData(result.user);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data on settings load:', error);
+    } finally {
+      setLoadingProfile(false);
+    }
+  }, [authToken]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
 
   const toggleLanguageDropdown = () => {
     setShowLanguageDropdown(!showLanguageDropdown);
@@ -47,15 +70,15 @@ export const useSettingsViewModel = () => {
 
   const handleLogout = async() => {
     clearAuthToken();
+    setUserData(null);
     try {
-  await Promise.allSettled([
-    GoogleSignin.signOut(),
-    getAuth().signOut(),
-    // Promise.resolve(LoginManager.logOut()),
-  ]);
-} catch {
-  return;
-}
+      await Promise.allSettled([
+        GoogleSignin.signOut(),
+        getAuth().signOut(),
+      ]);
+    } catch {
+      return;
+    }
   };
 
   return {
@@ -70,5 +93,7 @@ export const useSettingsViewModel = () => {
     handleLogout,
     toggleTheme,
     languageOptions,
+    userData,
+    loadingProfile,
   };
 };

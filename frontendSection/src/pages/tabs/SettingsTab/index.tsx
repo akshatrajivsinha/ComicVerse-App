@@ -20,9 +20,10 @@ const SettingScreen = () => {
     handleLogout,
     toggleTheme,
     languageOptions,
+    userData
   } = useSettingsViewModel();
   const dynamicStyles = createStyles(themeColors);
-
+  console.log("userData",userData);
   return (
     <SafeAreaView style={dynamicStyles.container}>
       <Header title={t('settings.title')} fontSize={18} />

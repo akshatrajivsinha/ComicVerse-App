@@ -4,11 +4,12 @@ export const screenNames = {
   LOGIN: 'Login' as const,
   REGISTER: 'Register' as const,
   OTP: 'OTP' as const,
-  
+
   // Main Stack
   MAIN_TABS: 'MainTabs' as const,
   SHOW_DETAIL: 'ShowDetail' as const,
-  
+  STORY_PAGE: 'StoryPage' as const,
+
   // Tab Navigator
   HOME: 'Home' as const,
   SHOWS: 'Shows' as const,

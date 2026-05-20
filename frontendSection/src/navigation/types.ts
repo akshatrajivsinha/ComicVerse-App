@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { Story } from '@src/utils/api';
 
 export type RootStackParamList = {
   AuthStack: NavigatorScreenParams<AuthStackParamList>;
@@ -11,12 +12,13 @@ export type AuthStackParamList = {
   Landing: undefined;
   Login: undefined;
   Register: undefined;
-  OTP: { phoneNumber?: string; email?: string; };
+  OTP: { phoneNumber?: string; email?: string };
 };
 
 export type MainStackParamList = {
   MainTabs: NavigatorScreenParams<TabParamList>;
-  ShowDetail: { slug?: string; };
+  ShowDetail: { slug?: string };
+  StoryPage: { slug?: string; story?: Story };
 };
 
 export type TabParamList = {
@@ -27,23 +29,21 @@ export type TabParamList = {
   Setting: undefined;
 };
 
-export type AuthStackNavigationProps<T extends keyof AuthStackParamList> = NativeStackScreenProps<
-  AuthStackParamList,
-  T
->;
+export type AuthStackNavigationProps<T extends keyof AuthStackParamList> =
+  NativeStackScreenProps<AuthStackParamList, T>;
 
-export type MainStackNavigationProps<T extends keyof MainStackParamList> = NativeStackScreenProps<
-  MainStackParamList,
-  T
->;
+export type MainStackNavigationProps<T extends keyof MainStackParamList> =
+  NativeStackScreenProps<MainStackParamList, T>;
 
-export type TabNavigationProps<T extends keyof TabParamList> = BottomTabScreenProps<
-  TabParamList,
-  T
->;
+export type TabNavigationProps<T extends keyof TabParamList> =
+  BottomTabScreenProps<TabParamList, T>;
 
 export type ShowDetailNavigationProps = NativeStackScreenProps<
   MainStackParamList,
   'ShowDetail'
 >;
 
+export type StoryPageNavigationProps = NativeStackScreenProps<
+  MainStackParamList,
+  'StoryPage'
+>;

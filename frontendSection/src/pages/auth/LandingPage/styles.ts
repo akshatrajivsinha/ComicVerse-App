@@ -22,7 +22,6 @@ export const createStyles = (themeColors: ThemeColors) =>
     },
     container: {
       flex: 1,
-      backgroundColor: 'rgba(15, 23, 42, 0.57)',
       paddingHorizontal: 12,
     },
     innerContainer: {

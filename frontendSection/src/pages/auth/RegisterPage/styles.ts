@@ -5,14 +5,17 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundDark,
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   innerContainer: {
     paddingHorizontal: 24,
   },
   title: {
-    fontSize: 34, 
+    fontSize: 34,
     fontWeight: '800',
+    color: colors.text,
+  },
+  footerTitle: {
     color: colors.text,
   },
   subtitle: {
@@ -22,9 +25,10 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
   toggleContainer: {
+    width:'100%',
     flexDirection: 'row',
     marginBottom: 25,
-    backgroundColor: colors.backgroundCard,
+    backgroundColor: colors.secondaryPurple,
     borderRadius: 12,
     padding: 4,
     position: 'relative',
@@ -33,9 +37,9 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     left: 4,
     width: '48%',
-    height: '98%',
+    height: '100%',
     top: 4,
-    backgroundColor: colors.secondaryPurple,
+    backgroundColor: colors.text,
     borderRadius: 8,
   },
   toggleButton: {
@@ -50,10 +54,12 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
   },
   toggleButtonTextActive: {
-    color: colors.text,
+    color: colors.secondaryPurple,
+    fontWeight: '800'
   },
   toggleButtonTextInactive: {
-    color: colors.textSlate,
+    color: colors.text,
+    fontWeight: '800'
   },
   inputContainer: {
     flexDirection: 'row',
@@ -63,12 +69,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     height: 58,
     marginBottom: 25,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderWidth: 2,
+    borderColor: colors.secondaryPurple,
   },
   prefix: {
     fontSize: 16,
-    color: colors.textSlate,
+    color: colors.text,
     marginRight: 8,
   },
   input: {

@@ -1,22 +1,23 @@
 import axios from 'axios';
 
-const CATEGORY_API_URL =
-  'https://getcategory-cm5h7rlbta-uc.a.run.app';
+const CATEGORY_API_URL = 'https://getcategory-cm5h7rlbta-uc.a.run.app';
 
-const SHOW_LIST_API_URL =
-  'https://getshowlist-cm5h7rlbta-uc.a.run.app';
+const SHOW_LIST_API_URL = 'https://getshowlist-cm5h7rlbta-uc.a.run.app';
 
-const HERO_VIDEO_API_URL =
-  'https://getherovideo-cm5h7rlbta-uc.a.run.app';
+const HERO_VIDEO_API_URL = 'https://getherovideo-cm5h7rlbta-uc.a.run.app';
 
 const UPCOMING_MOVIES_API_URL =
   'https://getupcommingmovies-cm5h7rlbta-uc.a.run.app';
 
-const MY_STORIES_API_URL =
-  'https://getmystorie-cm5h7rlbta-uc.a.run.app';
+const MY_STORIES_API_URL = 'https://getmystorie-cm5h7rlbta-uc.a.run.app';
 
 const SHOW_DETAIL_API_URL =
   'https://getshowdetailbyslug-cm5h7rlbta-uc.a.run.app';
+
+const STORY_DETAIL_API_URL =
+  'https://getstorydetialbyslug-cm5h7rlbta-uc.a.run.app';
+
+const USER_DATA_API_URL = 'https://getuserusingauthtoken-cm5h7rlbta-uc.a.run.app';
 
 export interface Category {
   id: string;
@@ -46,10 +47,18 @@ export interface HeroVideo {
 
 export interface Story {
   id?: string;
+  slug?: string;
   imageUri?: string;
   smallImageUri?: string;
   category?: string;
   title?: string;
+  description?: string;
+  author?: string;
+  releaseYear?: string;
+  rating?: number;
+  language?: string;
+  genre?: string[];
+  relatedStories?: Story[];
   createdAt?: any;
 }
 
@@ -60,6 +69,15 @@ export interface UpcomingMovie {
   releaseDate?: string;
   rating?: string;
   createdAt?: any;
+}
+
+export interface UserProfile {
+  uid?: string;
+  email: string;
+  name?: string;
+  provider?: string;
+  registrationCompleted?: boolean;
+  createdAt?: number;
 }
 
 export const getCategories = async () => {
@@ -139,6 +157,39 @@ export const getShowDetailBySlug = async (slug: string) => {
       success: false,
       data: null,
       error: 'Failed to fetch show details',
+    };
+  }
+};
+
+export const getStoryDetialBySlug = async (slug: string) => {
+  try {
+    const { data } = await axios.post(STORY_DETAIL_API_URL, {
+      slug,
+    });
+
+    return data;
+  } catch {
+    return {
+      success: false,
+      data: null,
+      error: 'Failed to fetch story details',
+    };
+  }
+};
+
+export const getUserByDatabaseToken = async (token: string) => {
+  try {
+    const { data } = await axios.get(USER_DATA_API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch {
+    return {
+      success: false,
+      user: null,
+      error: 'Failed to fetch user data',
     };
   }
 };

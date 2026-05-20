@@ -40,8 +40,8 @@ const createStyles = (themeColors: any, size: number) => StyleSheet.create({
     height: size,
     borderRadius: size ?? 80,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: themeColors.primaryBlue,
+    borderWidth: 2,
+    borderColor: themeColors.text,
   },
   image: {
     width: '100%',

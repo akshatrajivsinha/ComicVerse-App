@@ -8,6 +8,7 @@ import {
   Easing,
 } from 'react-native-reanimated';
 import { screenNames } from '@src/navigation/screenName';
+import { Dimensions } from 'react-native';
 
 interface UseRegisterPageViewModelProps {
   navigation: any;
@@ -27,6 +28,8 @@ export const useRegisterPageViewModel = ({
     message: '',
     type: 'success' as 'success' | 'error',
   });
+
+  const WIDTH_DIMENSION = Dimensions.get('screen').width
 
   const titleY = useSharedValue(50);
   const inputY = useSharedValue(80);
@@ -75,7 +78,7 @@ export const useRegisterPageViewModel = ({
         );
       },
     );
-  });
+  }, [loginType, buttonY, toggleTranslateX]);
 
   const titleStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: titleY.value }],
@@ -93,7 +96,7 @@ export const useRegisterPageViewModel = ({
   }));
 
   const toggleIndicatorStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: toggleTranslateX.value * 185 }],
+    transform: [{ translateX: toggleTranslateX.value* (7 * WIDTH_DIMENSION/16) }],
   }));
 
   const onPressIn = () => {

@@ -36,18 +36,22 @@ const StoryPageCard = ({
   return (
     <Card style={[styles.container, containerStyles]} {...cardProps}>
       <Image source={{ uri: imageUri }} style={styles.mainImage} />
-      <View style={{flex:1, marginLeft:16,gap:4}}>
-        <CustomText font={fonts.nunitoBold} style={styles.title}>
-          {title}
-        </CustomText>
-        <View style={styles.textContent}>
-          <Image
-            source={{ uri: smallImageUri }}
-            style={styles.smallCircularImage}
-          />
-          <CustomText font={fonts.nunitoBold} style={styles.category}>
-            {category}
+      <View style={styles.overlayContainer}>
+        <View style={styles.slantedBg} />
+        
+        <View style={styles.contentWrapper}>
+          <CustomText font={fonts.nunitoBold} style={styles.title} numberOfLines={3}>
+            {title}
           </CustomText>
+          <View style={styles.textContent}>
+            <Image
+              source={{ uri: smallImageUri }}
+              style={styles.smallCircularImage}
+            />
+            <CustomText font={fonts.nunitoBold} style={styles.category}>
+              {category}
+            </CustomText>
+          </View>
         </View>
       </View>
     </Card>
@@ -59,38 +63,57 @@ export default StoryPageCard;
 const createStyles = (themeColors: any) =>
   StyleSheet.create({
     container: {
-      flexDirection: 'row',
+      height: 200,
       borderRadius: 12,
+      overflow: 'hidden',
       backgroundColor: themeColors.cardBackground,
+      position: 'relative',
     },
     mainImage: {
-      width: 100,
-      height: 100,
-      borderRadius: 12,
+      ...StyleSheet.absoluteFill,
+      width: '100%',
+      height: '100%',
       resizeMode: 'cover',
+    },
+    overlayContainer: {
+      position: 'absolute',
+      bottom: 5,
+      right: 5,
+      width: '97%',
+      minHeight: 80,
+      justifyContent: 'center',
+    },
+    slantedBg: {
+      ...StyleSheet.absoluteFill,
+      backgroundColor: themeColors.teal,
+      borderBottomLeftRadius: 12,
+      borderBottomRightRadius: 12,
+      transform: [{ skewX: '-15deg' }], 
+    },
+    contentWrapper: {
+      paddingHorizontal: 12,
+      paddingVertical: 10,
     },
     textContent: {
       flexDirection: 'row',
-      gap:4,
-      alignItems:'center'
+      gap: 6,
+      alignItems: 'center',
+      marginTop: 4,
     },
     smallCircularImage: {
-      width: 20,
-      height: 20,
-      borderRadius: 20,
+      width: 18,
+      height: 18,
+      borderRadius: 9,
       resizeMode: 'cover',
     },
-    textContainer: {
-      flex: 1,
-    },
     category: {
-      fontSize: 14,
-      color: themeColors.text,
+      fontSize: 12,
+      color: themeColors.backgroundLight,
     },
     title: {
-      fontSize: 16,
-      color: themeColors.text,
-      lineHeight:16,
-      marginTop:4
+      fontSize: 14,
+      color: themeColors.backgroundLight,
+      lineHeight: 18,
     },
   });
+  

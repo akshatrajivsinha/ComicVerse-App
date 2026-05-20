@@ -4,7 +4,6 @@ const getMyStorieFunction = async (req: any, res: any) => {
   try {
     const db = admin.firestore();
     const storiesRef = db.collection("stories");
-    const snapshot = await storiesRef.get();
 
     const stories = [
       {
@@ -15,6 +14,7 @@ const getMyStorieFunction = async (req: any, res: any) => {
           "https://www.hanashi.fr/wp-content/uploads/2025/12/manga_plus_ban-1500x500.jpg",
         category: "Manga",
         title: "Naruto - The epic adventures of the world's greatest ninja!",
+        slug: "naruto",
       },
       {
         id: "2",
@@ -23,13 +23,19 @@ const getMyStorieFunction = async (req: any, res: any) => {
         smallImageUri:
           "https://1000logos.net/wp-content/uploads/2017/01/DC-Comics-Logo-1972.png",
         category: "DC",
-        title: "Wonder Woman - is a 2017 superhero film based on the DC Comics character Wonder Woman.",
+        title:
+          "Wonder Woman - is a 2017 superhero film based on the DC Comics character Wonder Woman.",
+        slug: "wonder-woman",
       },
     ];
 
+    const snapshot = await storiesRef.get();
+
     const existingStories = new Map();
     snapshot.docs.forEach((doc) => {
-      existingStories.set(doc.id, true);
+      const data = doc.data();
+
+      existingStories.set(data.id, doc.id);
     });
 
     const batch = db.batch();
@@ -37,19 +43,23 @@ const getMyStorieFunction = async (req: any, res: any) => {
     stories.forEach((story) => {
       if (existingStories.has(story.id)) {
         // Update existing story
-        const docRef = storiesRef.doc(story.id);
+        const docRef = storiesRef.doc(existingStories.get(story.id));
+
         batch.update(docRef, {
           imageUri: story.imageUri,
           smallImageUri: story.smallImageUri,
           category: story.category,
           title: story.title,
+          slug: story.slug,
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
       } else {
         // Create new story
-        const docRef = storiesRef.doc(story.id);
+        const docRef = storiesRef.doc();
+
         batch.set(docRef, {
           ...story,
+          id: story.id,
           createdAt: admin.firestore.FieldValue.serverTimestamp(),
         });
       }
