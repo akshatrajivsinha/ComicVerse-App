@@ -11,6 +11,9 @@ import getHeroVideoFunction from "./getHeroVideo";
 import getMyStorieFunction from "./getMyStorie";
 import getupcommingmoviesFunction from "./getupcommingmovies";
 import getShowDetailBySlugFunction from "./getShowDetailBySlug";
+import getStoryDetialBySlugFunction from "./getStoryDetialBySlug";
+import createUserBySocialLogin from "./createUserBySocialLogin";
+import getUserUsingTokenFunction from "./getUserUsingTokenFunction";
 // import serviceAccount from "./serviceAccount";
 
 const serviceAccount = {
@@ -49,3 +52,6 @@ export const getHeroVideo = onRequest(getHeroVideoFunction);
 export const getMyStorie = onRequest(getMyStorieFunction);
 export const getupcommingmovies = onRequest(getupcommingmoviesFunction);
 export const getShowDetailBySlug = onRequest(getShowDetailBySlugFunction);
+export const getStoryDetialBySlug = onRequest(getStoryDetialBySlugFunction);
+export const createUserBySocialLogins = onRequest(createUserBySocialLogin);
+export const getUserUsingAuthToken = onRequest(getUserUsingTokenFunction);

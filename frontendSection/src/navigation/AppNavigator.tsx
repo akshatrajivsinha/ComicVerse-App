@@ -8,6 +8,7 @@ import OTPScreen from '@src/pages/auth/OTPScreen';
 import TabNavigator from '@src/navigation/TabNavigator';
 import ShowDetail from '@src/pages/tabs/HomeTab/Show';
 import StoryPage from '@src/pages/tabs/HomeTab/StoryPage';
+import MapViewComponent from '@src/components/organism/MapView';
 import { useAuthStore } from '@src/store/authStore';
 import { screenNames } from '@src/navigation/screenName';
 
@@ -40,6 +41,7 @@ const MainStack = () => {
       <Stack.Screen name={screenNames.MAIN_TABS} component={TabNavigator} />
       <Stack.Screen name={screenNames.SHOW_DETAIL} component={ShowDetail} />
       <Stack.Screen name={screenNames.STORY_PAGE} component={StoryPage} />
+      <Stack.Screen name={screenNames.MAP_VIEW} component={MapViewComponent} />
     </Stack.Navigator>
   );
 };

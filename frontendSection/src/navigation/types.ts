@@ -19,6 +19,7 @@ export type MainStackParamList = {
   MainTabs: NavigatorScreenParams<TabParamList>;
   ShowDetail: { slug?: string };
   StoryPage: { slug?: string; story?: Story };
+  MapView: undefined;
 };
 
 export type TabParamList = {

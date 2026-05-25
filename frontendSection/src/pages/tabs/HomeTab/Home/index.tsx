@@ -3,12 +3,17 @@ import {
   View,
   ScrollView,
   RefreshControl,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import Header from '@src/components/atom/Header';
+import CustomText from '@src/components/atom/CustomText';
 import VideoPlayerCard from '@src/components/molecule/VideoPlayerCard';
 import { createStyles } from '@src/pages/tabs/HomeTab/Home/styles';
 import { useHomeScreenViewModel } from '@src/viewModels/tabs/useHomeScreenViewModel';
@@ -17,9 +22,15 @@ import CategoriesFlatList from '@src/components/organism/CategoriesFlatList';
 import ShowsFlatList from '@src/components/organism/ShowsFlatList';
 import StoriesFlatList from '@src/components/organism/StoriesFlatList';
 import BannersFlatList from '@src/components/organism/BannersFlatList';
+import { MapMarkerIcon } from '@src/assets/icons';
+import { MainStackParamList } from '@src/navigation/types';
+import { screenNames } from '@src/navigation/screenName';
+import { fonts } from '@src/config/fonts';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const {
     themeColors,
     categories,
@@ -29,6 +40,8 @@ const HomeScreen = () => {
     banners,
     loading,
     showsLoading,
+    currentAddress,
+    addressLoading,
     refreshing,
     onRefresh,
   } = useHomeScreenViewModel();
@@ -36,7 +49,23 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={dynamicStyles.container} edges={['top']}>
+      <View style={dynamicStyles.headerRow}>
+
           <Header title={t('home.title')} fontSize={24} />
+            <TouchableOpacity
+              style={dynamicStyles.addressContainer}
+              onPress={() => navigation.navigate(screenNames.MAP_VIEW)}
+              activeOpacity={0.8}
+              >
+              <Image
+                source={MapMarkerIcon}
+                style={dynamicStyles.mapMarkerIcon}
+                />
+              <CustomText style={dynamicStyles.addressText} numberOfLines={2} font={fonts.nunitoMedium}>
+                {addressLoading ? 'Fetching current address...' : currentAddress}
+              </CustomText>
+            </TouchableOpacity>
+                </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={dynamicStyles.scrollViewContainer}
