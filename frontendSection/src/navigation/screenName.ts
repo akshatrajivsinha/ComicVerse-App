@@ -9,6 +9,7 @@ export const screenNames = {
   MAIN_TABS: 'MainTabs' as const,
   SHOW_DETAIL: 'ShowDetail' as const,
   STORY_PAGE: 'StoryPage' as const,
+  MAP_VIEW: 'MapView' as const,
 
   // Tab Navigator
   HOME: 'Home' as const,

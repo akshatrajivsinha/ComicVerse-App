@@ -6,6 +6,7 @@ interface ThemeColors {
   text: string;
   teal: string;
   backgroundLight: string;
+  backgroundCard: string;
 }
 
 export const createStyles = (themeColors: ThemeColors) =>
@@ -14,11 +15,37 @@ export const createStyles = (themeColors: ThemeColors) =>
       flex: 1,
       backgroundColor: themeColors.backgroundDark
     },
+    headerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     scrollViewContainer: {
       flexGrow:1,
       gap: 14,
       marginTop:8,
       paddingBottom:25
+    },
+    addressContainer: {
+      width: '60%',
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+    },
+    addressLabel: {
+      color: themeColors.textSlate,
+      fontSize: 2,
+    },
+    addressText: {
+      color: themeColors.text,
+      fontSize: 12,
+      lineHeight: 14,
+    },
+    mapMarkerIcon: {
+      width: 16,
+      height: 16,
+      resizeMode: 'contain',
     },
     innerContainer: {
       flex: 1,

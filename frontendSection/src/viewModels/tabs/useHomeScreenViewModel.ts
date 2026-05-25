@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import Config from 'react-native-config';
 import { useColors } from '@src/utils/colors';
 import {
   getCategories,
@@ -13,6 +16,13 @@ import {
   UpcomingMovie,
 } from '@src/utils/api';
 
+// @ts-ignore
+import MapboxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
+
+const geocodingClient = MapboxGeocoding({
+  accessToken: Config.MAP_TOKEN ?? '',
+});
+
 export const useHomeScreenViewModel = () => {
   const themeColors = useColors();
 
@@ -25,6 +35,8 @@ export const useHomeScreenViewModel = () => {
 
   const [loading, setLoading] = useState(false);
   const [showsLoading, setShowsLoading] = useState(false);
+  const [currentAddress, setCurrentAddress] = useState('Fetching current address...');
+  const [addressLoading, setAddressLoading] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
   const [showsError, setShowsError] = useState<string | null>(null);
@@ -115,6 +127,98 @@ export const useHomeScreenViewModel = () => {
     setRefreshing(false);
   };
 
+  useEffect(() => {
+    const fetchLocation = async () => {
+      setAddressLoading(true);
+
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          Alert.alert(
+            'Permission Denied',
+            'Location permissions are required to center the map.',
+          );
+          setCurrentAddress('Location permission required');
+          setAddressLoading(false);
+          return;
+        }
+      } else if (Platform.OS === 'ios') {
+        Geolocation.requestAuthorization();
+      }
+
+      Geolocation.getCurrentPosition(
+        async position => {
+          const { longitude, latitude } = position.coords;
+          const coords: [number, number] = [longitude, latitude];
+
+          try {
+            const response = await geocodingClient
+              .reverseGeocode({ query: coords, limit: 1 })
+              .send();
+            const feature = response.body?.features?.[0];
+            setCurrentAddress(feature?.place_name || 'Current Location');
+          } catch (locationGeocodeError) {
+            console.log(
+              'Current location geocode error',
+              locationGeocodeError,
+            );
+            setCurrentAddress('Current Location');
+          } finally {
+            setAddressLoading(false);
+          }
+        },
+        locationError => {
+          console.log(
+            'High accuracy fetch failed, trying cellular/wifi towers fallback...',
+            locationError,
+          );
+
+          Geolocation.getCurrentPosition(
+            async fallbackPosition => {
+              const { longitude, latitude } = fallbackPosition.coords;
+              const coords: [number, number] = [longitude, latitude];
+
+              try {
+                const response = await geocodingClient
+                  .reverseGeocode({ query: coords, limit: 1 })
+                  .send();
+                const feature = response.body?.features?.[0];
+                setCurrentAddress(feature?.place_name || 'Current Location');
+              } catch (fallbackGeocodeError) {
+                console.log('Fallback geocode error', fallbackGeocodeError);
+                setCurrentAddress('Current Location');
+              } finally {
+                setAddressLoading(false);
+              }
+            },
+            _fallbackError => {
+              Alert.alert(
+                'Location Error',
+                'Device timeout. Please check your GPS signal settings.',
+              );
+              setCurrentAddress('Unable to fetch current address');
+              setAddressLoading(false);
+            },
+            {
+              enableHighAccuracy: false,
+              timeout: 20000,
+              maximumAge: 3600000,
+            },
+          );
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 10000,
+        },
+      );
+    };
+
+    fetchLocation();
+  }, []);
+
   return {
     themeColors,
     categories,
@@ -122,6 +226,8 @@ export const useHomeScreenViewModel = () => {
     heroVideo,
     stories,
     banners,
+    currentAddress,
+    addressLoading,
     loading,
     showsLoading,
     error,
