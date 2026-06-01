@@ -1,6 +1,6 @@
 // styles.ts
 
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 interface ThemeColors {
   backgroundDark: string;
@@ -36,10 +36,18 @@ export const createStyles = (themeColors: ThemeColors) =>
     map: {
       flex: 1,
     },
+    drawTouchOverlay: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      zIndex: 40,
+    },
     floatingControlsRow: {
       position: 'absolute',
       top: 15,
-      right: 15,
+      // right: 15,
       flexDirection: 'row',
       zIndex: 100,
     },
@@ -57,9 +65,9 @@ export const createStyles = (themeColors: ThemeColors) =>
       marginRight: 10,
     },
     buttonToggleStack: {
-      flexDirection: 'column',
-      alignSelf: 'flex-start',
-      gap: 10,
+      // flexDirection: 'column',
+      // alignSelf: 'flex-start',
+      // gap: 10,
     },
     searchToggleButton: {
       backgroundColor: '#007AFF',
@@ -106,21 +114,95 @@ export const createStyles = (themeColors: ThemeColors) =>
     },
     bottomActionsContainer: {
       position: 'absolute',
-      top: 170,
+      top: 210,
       right: 15,
       alignItems: 'center',
       gap: 10,
     },
-    recenterButton: {
-      backgroundColor: '#007AFF',
-      paddingVertical: 12,
-      paddingHorizontal: 12,
-      borderRadius: 25,
-      elevation: 5,
+    // drawAreaButton: {
+    //   width: "90%",
+    //   height: 25,
+    //   backgroundColor: '#0F172A',
+    //   borderRadius: 20,
+    //   alignItems: 'center',
+    //   justifyContent: 'center',
+    //   elevation: 5,
+    //   shadowColor: '#000',
+    //   shadowOffset: { width: 0, height: 3 },
+    //   shadowOpacity: 0.3,
+    //   shadowRadius: 4,
+    // },
+    drawAreaButtonActive: {
+      backgroundColor: '#EF4444',
+    },
+    drawAreaButtonText: {
+      color: '#FFFFFF',
+      fontSize: 11,
+      fontWeight: '800',
+    },
+    drawAreaCard: {
+      position: 'absolute',
+      left: 12,
+      right: 12,
+      bottom: 12,
+      zIndex: 100,
+      maxHeight: 190,
+      backgroundColor: themeColors.backgroundDark,
+      borderRadius: 12,
+      padding: 12,
+      elevation: 6,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.3,
-      shadowRadius: 4,
+      shadowOpacity: 0.2,
+      shadowRadius: 5,
+    },
+    drawAreaHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    drawAreaTitle: {
+      color: themeColors.text,
+      fontSize: 14,
+      fontWeight: '800',
+    },
+    drawAreaSubtitle: {
+      color: themeColors.textSlate,
+      fontSize: 11,
+      marginTop: 2,
+    },
+    drawAreaActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    drawAreaSmallButton: {
+      height: 30,
+      minWidth: 52,
+      paddingHorizontal: 10,
+      borderRadius: 8,
+      backgroundColor: '#007AFF',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    drawAreaSmallButtonText: {
+      color: '#FFFFFF',
+      fontSize: 11,
+      fontWeight: '800',
+    },
+    coordinatesList: {
+      marginTop: 10,
+      gap: 4,
+    },
+    coordinateText: {
+      color: themeColors.text,
+      fontSize: 11,
+      lineHeight: 15,
+    },
+    emptyCoordinateText: {
+      color: themeColors.textSlate,
+      fontSize: 11,
     },
     clearMapButton: {
       backgroundColor: '#c30f06ff',
@@ -156,6 +238,37 @@ export const createStyles = (themeColors: ThemeColors) =>
       shadowOpacity: 0.15,
       shadowRadius: 4,
       elevation: 5,
+    },
+    locationCardContent: {
+      flex: 1,
+    },
+    locationRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 8,
+      gap: 12,
+    },
+    currentLocationDot: {
+      backgroundColor: '#1ebe53ff',
+      height: 20,
+      width: 20,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    selectedLocationDot: {
+      backgroundColor: '#FF3B30',
+      height: 20,
+      width: 20,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    locationDotInner: {
+      width: 6,
+      height: 6,
+      borderRadius: 6,
+      backgroundColor: '#FFFFFF',
     },
     locationIcon: {
       width: 22,
@@ -196,5 +309,59 @@ export const createStyles = (themeColors: ThemeColors) =>
       height: 40,
       fontSize: 13,
       color: '#111111',
+    },
+    searchContainer:{
+      position: 'absolute',
+      top: 15,
+      left: 0,
+      zIndex: 100,
+      width: '60%',
+    },
+    // Add / update these specific keys within your createStyles function inside styles.ts
+
+    topControlsRow: {
+      position: 'absolute',
+      top: Platform.OS === 'ios' ? 50 : 20, // Adjusts cleanly for status bars
+      left: 5,
+      right: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      zIndex: 100,
+      gap: 0,
+    },
+    permanentSearchWrapper: {
+      flex: 1,
+    },
+    bottomControlsStack: {
+      position: 'absolute',
+      bottom: 120,
+      left: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 14,
+      zIndex: 100,
+    },
+    recenterButton: {
+      backgroundColor: '#007AFF',
+      padding: 14,
+      borderRadius: 30,
+      elevation: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+    },
+    drawAreaButton: {
+      height: 44,
+      width: 44,
+      backgroundColor: '#0e131dff',
+      borderRadius: 22,
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
     },
   });

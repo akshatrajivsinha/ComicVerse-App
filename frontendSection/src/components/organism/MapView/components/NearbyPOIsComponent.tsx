@@ -44,7 +44,7 @@ export const NearbyPOIsComponent: React.FC<NearbyPOIsComponentProps> = ({
   }, [registerClearRef, onPOIsUpdated]);
 
   const fetchNearbyPOIs = async (
-    category: 'hotel' | 'gas_station' | 'restaurant',
+    category: 'hotel' | 'gas_station' | 'restaurant' | 'park',
   ) => {
     if (!userLocation) {
       Alert.alert(
@@ -60,6 +60,7 @@ export const NearbyPOIsComponent: React.FC<NearbyPOIsComponentProps> = ({
     if (category === 'hotel') poiCategory = 'hotel';
     if (category === 'gas_station') poiCategory = 'gas_station';
     if (category === 'restaurant') poiCategory = 'restaurant';
+    if (category === 'park') poiCategory = 'park';
 
     try {
       const url = `https://api.mapbox.com/search/searchbox/v1/category/${poiCategory}?proximity=${userLocation[0]},${userLocation[1]}&limit=10&access_token=${mapToken}`;
@@ -68,7 +69,7 @@ export const NearbyPOIsComponent: React.FC<NearbyPOIsComponentProps> = ({
       const data = await response.json();
 
       const features = data.features ?? [];
-
+      console.log("features", features);
       const pois: MarkerType[] = features.map((feature: any) => ({
         id: `poi-${
           feature.properties?.mapbox_id || Date.now()
@@ -143,6 +144,28 @@ export const NearbyPOIsComponent: React.FC<NearbyPOIsComponentProps> = ({
               onPress={() => fetchNearbyPOIs('gas_station')}
             >
               <CustomText style={styles.optionText}>⛽ Petrol Pumps</CustomText>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                dynamicStyles.recenterButton,
+                styles.optionButton,
+                { backgroundColor: '#34C759' },
+              ]}
+              onPress={() => fetchNearbyPOIs('park')}
+            >
+              <CustomText style={styles.optionText}>🌳 Parks</CustomText>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                dynamicStyles.recenterButton,
+                styles.optionButton,
+                { backgroundColor: '#34C759' },
+              ]}
+              onPress={() => fetchNearbyPOIs('restaurant')}
+            >
+              <CustomText style={styles.optionText}>🍽️ Restaurants</CustomText>
             </TouchableOpacity>
           </View>
         </View>
