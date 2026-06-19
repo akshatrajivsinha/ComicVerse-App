@@ -1,9 +1,8 @@
 import React from 'react';
 import Mapbox from '@rnmapbox/maps';
-import { Coordinate } from '../constants';
 
 interface AreaBoundaryOverlayProps {
-  coordinates: Coordinate[];
+  coordinates: [number, number][];
   visible?: boolean;
   fillColor?: string;
   strokeColor?: string;
@@ -12,12 +11,11 @@ interface AreaBoundaryOverlayProps {
 const AreaBoundaryOverlay: React.FC<AreaBoundaryOverlayProps> = ({
   coordinates,
   visible = true,
-  fillColor = '#FF9500', // Default Orange Fill
-  strokeColor = '#FF9500', // Default Orange Line
+  fillColor = '#FF9500',
+  strokeColor = '#FF9500',
 }) => {
   if (!visible || !coordinates || coordinates.length === 0) return null;
 
-  // Ensure the polygon is explicitly closed (GeoJSON requirements)
   const firstPoint = coordinates[0];
   const lastPoint = coordinates[coordinates.length - 1];
   const closedCoordinates = [...coordinates];
@@ -26,34 +24,26 @@ const AreaBoundaryOverlay: React.FC<AreaBoundaryOverlayProps> = ({
     closedCoordinates.push(firstPoint);
   }
 
-  const geoJsonStructure: any = {
+  const geoJsonStructure: GeoJSON.Feature<GeoJSON.Polygon> = {
     type: 'Feature',
-    geometry: {
-      type: 'Polygon',
-      coordinates: [closedCoordinates],
-    },
+    geometry: { type: 'Polygon', coordinates: [closedCoordinates] },
     properties: {},
+  };
+
+  const layerStyles = {
+    fill: { fillColor, fillOpacity: 0.2, fillAntialias: true },
+    line: {
+      lineWidth: 2,
+      lineColor: strokeColor,
+      lineOpacity: 0.85,
+      lineDasharray: [2, 2],
+    },
   };
 
   return (
     <Mapbox.ShapeSource id="customAreaBoundarySource" shape={geoJsonStructure}>
-      <Mapbox.FillLayer
-        id="customAreaBoundaryFill"
-        style={{
-          fillColor: fillColor,
-          fillOpacity: 0.2,
-          fillAntialias: true,
-        }}
-      />
-      <Mapbox.LineLayer
-        id="customAreaBoundaryLine"
-        style={{
-          lineWidth: 2,
-          lineColor: strokeColor,
-          lineOpacity: 0.85,
-          lineDasharray: [2, 2], // Dashed border styling
-        }}
-      />
+      <Mapbox.FillLayer id="customAreaBoundaryFill" style={layerStyles.fill} />
+      <Mapbox.LineLayer id="customAreaBoundaryLine" style={layerStyles.line} />
     </Mapbox.ShapeSource>
   );
 };

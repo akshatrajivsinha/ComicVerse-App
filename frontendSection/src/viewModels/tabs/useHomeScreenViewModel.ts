@@ -127,97 +127,97 @@ export const useHomeScreenViewModel = () => {
     setRefreshing(false);
   };
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      setAddressLoading(true);
+  // useEffect(() => {
+  //   const fetchLocation = async () => {
+  //     setAddressLoading(true);
 
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          Alert.alert(
-            'Permission Denied',
-            'Location permissions are required to center the map.',
-          );
-          setCurrentAddress('Location permission required');
-          setAddressLoading(false);
-          return;
-        }
-      } else if (Platform.OS === 'ios') {
-        Geolocation.requestAuthorization();
-      }
+  //     if (Platform.OS === 'android') {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       );
+  //       if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+  //         Alert.alert(
+  //           'Permission Denied',
+  //           'Location permissions are required to center the map.',
+  //         );
+  //         setCurrentAddress('Location permission required');
+  //         setAddressLoading(false);
+  //         return;
+  //       }
+  //     } else if (Platform.OS === 'ios') {
+  //       Geolocation.requestAuthorization();
+  //     }
 
-      Geolocation.getCurrentPosition(
-        async position => {
-          const { longitude, latitude } = position.coords;
-          const coords: [number, number] = [longitude, latitude];
+  //     Geolocation.getCurrentPosition(
+  //       async position => {
+  //         const { longitude, latitude } = position.coords;
+  //         const coords: [number, number] = [longitude, latitude];
 
-          try {
-            const response = await geocodingClient
-              .reverseGeocode({ query: coords, limit: 1 })
-              .send();
-            const feature = response.body?.features?.[0];
-            setCurrentAddress(feature?.place_name || 'Current Location');
-          } catch (locationGeocodeError) {
-            console.log(
-              'Current location geocode error',
-              locationGeocodeError,
-            );
-            setCurrentAddress('Current Location');
-          } finally {
-            setAddressLoading(false);
-          }
-        },
-        locationError => {
-          console.log(
-            'High accuracy fetch failed, trying cellular/wifi towers fallback...',
-            locationError,
-          );
+  //         try {
+  //           const response = await geocodingClient
+  //             .reverseGeocode({ query: coords, limit: 1 })
+  //             .send();
+  //           const feature = response.body?.features?.[0];
+  //           setCurrentAddress(feature?.place_name || 'Current Location');
+  //         } catch (locationGeocodeError) {
+  //           console.log(
+  //             'Current location geocode error',
+  //             locationGeocodeError,
+  //           );
+  //           setCurrentAddress('Current Location');
+  //         } finally {
+  //           setAddressLoading(false);
+  //         }
+  //       },
+  //       locationError => {
+  //         console.log(
+  //           'High accuracy fetch failed, trying cellular/wifi towers fallback...',
+  //           locationError,
+  //         );
 
-          Geolocation.getCurrentPosition(
-            async fallbackPosition => {
-              const { longitude, latitude } = fallbackPosition.coords;
-              const coords: [number, number] = [longitude, latitude];
+  //         Geolocation.getCurrentPosition(
+  //           async fallbackPosition => {
+  //             const { longitude, latitude } = fallbackPosition.coords;
+  //             const coords: [number, number] = [longitude, latitude];
 
-              try {
-                const response = await geocodingClient
-                  .reverseGeocode({ query: coords, limit: 1 })
-                  .send();
-                const feature = response.body?.features?.[0];
-                setCurrentAddress(feature?.place_name || 'Current Location');
-              } catch (fallbackGeocodeError) {
-                console.log('Fallback geocode error', fallbackGeocodeError);
-                setCurrentAddress('Current Location');
-              } finally {
-                setAddressLoading(false);
-              }
-            },
-            _fallbackError => {
-              Alert.alert(
-                'Location Error',
-                'Device timeout. Please check your GPS signal settings.',
-              );
-              setCurrentAddress('Unable to fetch current address');
-              setAddressLoading(false);
-            },
-            {
-              enableHighAccuracy: false,
-              timeout: 20000,
-              maximumAge: 3600000,
-            },
-          );
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 10000,
-        },
-      );
-    };
+  //             try {
+  //               const response = await geocodingClient
+  //                 .reverseGeocode({ query: coords, limit: 1 })
+  //                 .send();
+  //               const feature = response.body?.features?.[0];
+  //               setCurrentAddress(feature?.place_name || 'Current Location');
+  //             } catch (fallbackGeocodeError) {
+  //               console.log('Fallback geocode error', fallbackGeocodeError);
+  //               setCurrentAddress('Current Location');
+  //             } finally {
+  //               setAddressLoading(false);
+  //             }
+  //           },
+  //           _fallbackError => {
+  //             Alert.alert(
+  //               'Location Error',
+  //               'Device timeout. Please check your GPS signal settings.',
+  //             );
+  //             setCurrentAddress('Unable to fetch current address');
+  //             setAddressLoading(false);
+  //           },
+  //           {
+  //             enableHighAccuracy: false,
+  //             timeout: 20000,
+  //             maximumAge: 3600000,
+  //           },
+  //         );
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //         timeout: 10000,
+  //         maximumAge: 10000,
+  //       },
+  //     );
+  //   };
 
-    fetchLocation();
-  }, []);
+  //   fetchLocation();
+  // }, []);
 
   return {
     themeColors,

@@ -9,6 +9,8 @@ import SearchIcon from '@src/assets/icons/searchIcon.png';
 import ResetIcon from '@src/assets/icons/resetIcon.png';
 import TrafficSignIcon from '@src/assets/icons/trafficSignIcon.png';
 import OptionIcon from '@src/assets/icons/optionIcon.png';
+import TapIcon from '@src/assets/icons/tapIcon.png';
+import BackButtonIcon from '@src/assets/icons/backButton.png';
 
 export {
     BackIcon,
@@ -21,5 +23,7 @@ export {
     SearchIcon,
     ResetIcon,
     TrafficSignIcon,
-    OptionIcon
+    OptionIcon,
+    TapIcon,
+    BackButtonIcon
 }

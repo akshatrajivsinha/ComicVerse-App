@@ -1,116 +1,127 @@
 import React, { memo, useMemo } from 'react';
-import Mapbox, {
-  FillLayerStyle,
-  LineLayerStyle,
-} from '@rnmapbox/maps';
+import Mapbox, { LineLayerStyle, CircleLayerStyle } from '@rnmapbox/maps';
+import { Coordinate, DrawablePolylineProps } from '../types';
 
-type Coordinate = [number, number];
-
-type DrawablePolylineProps = {
-  coordinates: Coordinate[];
-  sourceId?: string;
-  lineLayerId?: string;
-  fillLayerId?: string;
-  lineColor?: string;
-  lineWidth?: number;
-  fillColor?: string;
-  fillOpacity?: number;
-};
-
-// Closes the polygon loop safely
 const closeRing = (coordinates: Coordinate[]): Coordinate[] => {
-  if (coordinates.length < 3) {
-    return coordinates;
-  }
+  if (coordinates.length < 3) return coordinates;
   const first = coordinates[0];
   const last = coordinates[coordinates.length - 1];
-
-  if (first[0] === last[0] && first[1] === last[1]) {
-    return coordinates;
-  }
-  return [...coordinates, first];
+  return first[0] === last[0] && first[1] === last[1]
+    ? coordinates
+    : [...coordinates, first];
 };
 
-// Applies Chaikin-like algorithm to smooth user-drawn jagged lines
-const smoothLineCoordinates = (coordinates: Coordinate[]): Coordinate[] => {
-  if (coordinates.length < 3) {
-    return coordinates;
-  }
+const VISIBLE_VERTEX_HANDLE_DISTANCE_METERS = 18;
 
-  let smoothedCoordinates = coordinates;
+const getDistanceBetweenCoordinates = (
+  firstCoordinate: Coordinate,
+  secondCoordinate: Coordinate,
+) => {
+  const earthRadiusInMeters = 6371000;
+  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+  const firstLatitude = toRadians(firstCoordinate[1]);
+  const secondLatitude = toRadians(secondCoordinate[1]);
+  const latitudeDelta = toRadians(secondCoordinate[1] - firstCoordinate[1]);
+  const longitudeDelta = toRadians(secondCoordinate[0] - firstCoordinate[0]);
 
-  for (let iteration = 0; iteration < 2; iteration += 1) {
-    const nextCoordinates: Coordinate[] = [smoothedCoordinates[0]];
+  const haversineValue =
+    Math.sin(latitudeDelta / 2) * Math.sin(latitudeDelta / 2) +
+    Math.cos(firstLatitude) *
+      Math.cos(secondLatitude) *
+      Math.sin(longitudeDelta / 2) *
+      Math.sin(longitudeDelta / 2);
 
-    for (let index = 0; index < smoothedCoordinates.length - 1; index += 1) {
-      const current = smoothedCoordinates[index];
-      const next = smoothedCoordinates[index + 1];
+  return (
+    earthRadiusInMeters *
+    2 *
+    Math.atan2(Math.sqrt(haversineValue), Math.sqrt(1 - haversineValue))
+  );
+};
 
-      nextCoordinates.push([
-        current[0] * 0.75 + next[0] * 0.25,
-        current[1] * 0.75 + next[1] * 0.25,
-      ]);
-      nextCoordinates.push([
-        current[0] * 0.25 + next[0] * 0.75,
-        current[1] * 0.25 + next[1] * 0.75,
-      ]);
+const getVisibleVertexIndexes = (coordinates: Coordinate[]) => {
+  if (coordinates.length === 0) return new Set<number>();
+
+  const visibleIndexes = new Set<number>([0]);
+  let distanceSinceLastVisibleHandle = 0;
+
+  for (let index = 1; index < coordinates.length; index += 1) {
+    distanceSinceLastVisibleHandle += getDistanceBetweenCoordinates(
+      coordinates[index - 1],
+      coordinates[index],
+    );
+    if (
+      distanceSinceLastVisibleHandle >= VISIBLE_VERTEX_HANDLE_DISTANCE_METERS
+    ) {
+      visibleIndexes.add(index);
+      distanceSinceLastVisibleHandle = 0;
     }
-
-    nextCoordinates.push(smoothedCoordinates[smoothedCoordinates.length - 1]);
-    smoothedCoordinates = nextCoordinates;
   }
-
-  return smoothedCoordinates;
+  visibleIndexes.add(coordinates.length - 1);
+  return visibleIndexes;
 };
 
 const DrawablePolyline = ({
   coordinates,
   sourceId = 'drawn-area-source',
   lineLayerId = 'drawn-area-line',
-  fillLayerId = 'drawn-area-fill',
-  lineColor = '#EF4444',
+  vertexLayerId = 'drawn-area-vertices',
+  lineColor = '#566febff',
   lineWidth = 4,
-  fillColor = '#F97316',
-  fillOpacity = 0.2,
+  showVertexHandles = true,
+  visibleVertexIndexes,
+  isDrawingActive = false,
 }: DrawablePolylineProps) => {
-  
-  // Memoize both line and area coordinate calculations internally
-  const { smoothedLine, smoothedArea } = useMemo(() => {
-    const smoothedLine = smoothLineCoordinates(coordinates);
-    const smoothedArea = closeRing(smoothedLine);
-    return { smoothedLine, smoothedArea };
-  }, [coordinates]);
+  const renderedLine = useMemo(() => {
+    return isDrawingActive ? coordinates : closeRing(coordinates);
+  }, [coordinates, isDrawingActive]);
 
   const shape = useMemo<GeoJSON.FeatureCollection>(() => {
     const features: GeoJSON.Feature[] = [];
+    const effectiveVisibleVertexIndexes =
+      visibleVertexIndexes === undefined
+        ? getVisibleVertexIndexes(coordinates)
+        : new Set(visibleVertexIndexes);
 
     if (coordinates.length >= 2) {
       features.push({
         type: 'Feature',
+        id: `${sourceId}-line`,
         properties: { type: 'draw-line' },
-        geometry: {
-          type: 'LineString',
-          coordinates: smoothedLine,
-        },
+        geometry: { type: 'LineString', coordinates: renderedLine },
       });
     }
 
-    if (coordinates.length >= 3) {
+    if (coordinates.length >= 3 && !isDrawingActive) {
       features.push({
         type: 'Feature',
+        id: `${sourceId}-area`,
         properties: { type: 'draw-area' },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [smoothedArea],
-        },
+        geometry: { type: 'Polygon', coordinates: [renderedLine] },
       });
     }
 
-    return {
-      type: 'FeatureCollection',
-      features,
-    };
-  }, [coordinates, smoothedLine, smoothedArea]);
+    if (showVertexHandles) {
+      coordinates.forEach((coordinate, index) => {
+        if (effectiveVisibleVertexIndexes.has(index)) {
+          features.push({
+            type: 'Feature',
+            id: `${sourceId}-vertex-${index}`,
+            properties: { type: 'draw-vertex', vertexIndex: index },
+            geometry: { type: 'Point', coordinates: coordinate },
+          });
+        }
+      });
+    }
+
+    return { type: 'FeatureCollection', features };
+  }, [
+    coordinates,
+    showVertexHandles,
+    sourceId,
+    renderedLine,
+    visibleVertexIndexes,
+    isDrawingActive,
+  ]);
 
   const lineStyle = useMemo<LineLayerStyle>(
     () => ({
@@ -122,29 +133,30 @@ const DrawablePolyline = ({
     [lineColor, lineWidth],
   );
 
-  const fillStyle = useMemo<FillLayerStyle>(
+  const vertexStyle = useMemo<CircleLayerStyle>(
     () => ({
-      fillColor,
-      fillOpacity,
+      circleRadius: 6,
+      circleColor: '#FFFFFF',
+      circleStrokeColor: lineColor,
+      circleStrokeWidth: 2,
+      circlePitchAlignment: 'map',
     }),
-    [fillColor, fillOpacity],
+    [lineColor],
   );
 
-  if (!coordinates.length) {
-    return null;
-  }
+  if (!coordinates.length) return null;
 
   return (
     <Mapbox.ShapeSource id={sourceId} shape={shape}>
-      <Mapbox.FillLayer
-        id={fillLayerId}
-        filter={['==', ['get', 'type'], 'draw-area']}
-        style={fillStyle}
-      />
       <Mapbox.LineLayer
         id={lineLayerId}
         filter={['==', ['get', 'type'], 'draw-line']}
         style={lineStyle}
+      />
+      <Mapbox.CircleLayer
+        id={vertexLayerId}
+        filter={['==', ['get', 'type'], 'draw-vertex']}
+        style={vertexStyle}
       />
     </Mapbox.ShapeSource>
   );

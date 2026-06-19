@@ -26,6 +26,7 @@ import { MapMarkerIcon } from '@src/assets/icons';
 import { MainStackParamList } from '@src/navigation/types';
 import { screenNames } from '@src/navigation/screenName';
 import { fonts } from '@src/config/fonts';
+import { colors } from '@src/utils/colors';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
@@ -59,6 +60,7 @@ const HomeScreen = () => {
               >
               <Image
                 source={MapMarkerIcon}
+                tintColor={colors.white}
                 style={dynamicStyles.mapMarkerIcon}
                 />
               <CustomText style={dynamicStyles.addressText} numberOfLines={2} font={fonts.nunitoMedium}>
