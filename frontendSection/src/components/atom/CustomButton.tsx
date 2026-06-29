@@ -13,7 +13,7 @@ import CustomText from '@src/components/atom/CustomText';
 import { fonts } from '@src/config/fonts';
 
 interface CustomButtonProps {
-  title: string;
+  title?: string;
   onPress: () => void;
   onPressIn?: () => void;
   onPressOut?: () => void;

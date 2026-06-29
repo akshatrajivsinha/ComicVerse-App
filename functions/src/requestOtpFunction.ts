@@ -53,6 +53,9 @@ const requestOtpFunction = async (req: any, res: any) => {
         otpAttempts: 0,
         registrationCompleted: false,
         authToken: "",
+        profileName: "",
+        coverImage: "",
+        profileImage: "",
       });
     } else {
       await userRef.update({

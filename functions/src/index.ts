@@ -14,6 +14,7 @@ import getShowDetailBySlugFunction from "./getShowDetailBySlug";
 import getStoryDetialBySlugFunction from "./getStoryDetialBySlug";
 import createUserBySocialLogin from "./createUserBySocialLogin";
 import getUserUsingTokenFunction from "./getUserUsingTokenFunction";
+import updateUserProfileFunction from "./updateUserProfileFunction";
 // import serviceAccount from "./serviceAccount";
 
 const serviceAccount = {
@@ -55,3 +56,4 @@ export const getShowDetailBySlug = onRequest(getShowDetailBySlugFunction);
 export const getStoryDetialBySlug = onRequest(getStoryDetialBySlugFunction);
 export const createUserBySocialLogins = onRequest(createUserBySocialLogin);
 export const getUserUsingAuthToken = onRequest(getUserUsingTokenFunction);
+export const setUserProfileFunction = onRequest(updateUserProfileFunction);

@@ -12,7 +12,12 @@ import { useThemeStore } from '@src/store/themeStore';
 import { useLanguageStore, languageOptions, Language } from '@src/store/languageStore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getAuth } from '@react-native-firebase/auth';
-import { getUserByDatabaseToken, UserProfile } from '@src/utils/api'; 
+import {
+  getUserByDatabaseToken,
+  setUserProfile,
+  UserProfile,
+} from '@src/utils/api';
+import { launchImageLibrary, Asset } from 'react-native-image-picker';
 
 export const useSettingsViewModel = () => {
   const { authToken, clearAuthToken } = useAuthStore();
@@ -23,6 +28,16 @@ export const useSettingsViewModel = () => {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [userData, setUserData] = useState<UserProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
+
+  const [coverImage, setCoverImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const [tempName, setTempName] = useState('');
+  const [tempCoverImage, setTempCoverImage] = useState('');
+  const [tempProfileImage, setTempProfileImage] = useState('');
 
   const dropdownHeight = useSharedValue(0);
   const dropdownOpacity = useSharedValue(0);
@@ -30,11 +45,13 @@ export const useSettingsViewModel = () => {
   const fetchUserData = useCallback(async () => {
     if (!authToken) return;
     setLoadingProfile(true);
-    
+
     try {
       const result = await getUserByDatabaseToken(authToken);
       if (result.success && result.user) {
         setUserData(result.user);
+        setCoverImage(result.user.coverImage || '');
+        setProfileImage(result.user.profileImage || '');
       }
     } catch (error) {
       console.error('Failed to fetch user data on settings load:', error);
@@ -68,7 +85,8 @@ export const useSettingsViewModel = () => {
     toggleLanguageDropdown();
   };
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
+    setLogoutModalVisible(false);
     clearAuthToken();
     setUserData(null);
     try {
@@ -80,6 +98,84 @@ export const useSettingsViewModel = () => {
       return;
     }
   };
+
+  const openEditModal = () => {
+    setTempName(userData?.profileName || '');
+    setTempCoverImage(coverImage);
+    setTempProfileImage(profileImage || userData?.profileImage || '');
+    setEditModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalVisible(false);
+  };
+
+  const openLogoutModal = () => setLogoutModalVisible(true);
+  const closeLogoutModal = () => setLogoutModalVisible(false);
+
+  const pickImage = (callback: (dataUrl: string) => void) => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 1,
+        includeBase64: true,
+        maxWidth: 600,
+        maxHeight: 600,
+        quality: 0.6,
+      },
+      (response) => {
+        if (response.didCancel || response.errorCode) return;
+        const asset: Asset | undefined = response.assets?.[0];
+        if (asset?.base64 && asset?.type) {
+          callback(`data:${asset.type};base64,${asset.base64}`);
+        }
+      },
+    );
+  };
+
+  const pickCoverImage = () => {
+    pickImage((uri) => setTempCoverImage(uri));
+  };
+
+  const pickProfileImage = () => {
+    pickImage((uri) => setTempProfileImage(uri));
+  };
+
+  const saveProfileChanges = async () => {
+    if (!authToken) return;
+    setSavingProfile(true);
+
+    const updatedName = tempName || userData?.profileName || '';
+    const updatedCoverImage = tempCoverImage || coverImage || '';
+    const updatedProfileImage = tempProfileImage || profileImage || userData?.profileImage || '';
+
+    try {
+      const saveResult = await setUserProfile(authToken, {
+        profileName: updatedName,
+        coverImage: updatedCoverImage,
+        profileImage: updatedProfileImage,
+      });
+      console.log("saveResult", saveResult)
+      if (saveResult?.success) {
+        console.log("Succes",saveResult.user)
+        const apiUser = saveResult.user;
+        setUserData(apiUser || null);
+        setCoverImage(apiUser?.coverImage || updatedCoverImage);
+        setProfileImage(apiUser?.profileImage || updatedProfileImage);
+      }
+      setEditModalVisible(false);
+    } catch (error) {
+      console.error('Failed to save profile:', error);
+    } finally {
+      setSavingProfile(false);
+    }
+  };
+
+  const profileImageUrl =
+    profileImage || userData?.profileImage || 'https://jkfenner.com/wp-content/uploads/2019/11/default.jpg';
+
+  const coverImageUrl =
+    coverImage || 'https://images.unsplash.com/photo-1614854262318-831574f15f1f?w=1200';
 
   return {
     language,
@@ -95,5 +191,21 @@ export const useSettingsViewModel = () => {
     languageOptions,
     userData,
     loadingProfile,
+    savingProfile,
+    profileImageUrl,
+    coverImageUrl,
+    editModalVisible,
+    logoutModalVisible,
+    tempName,
+    setTempName,
+    tempCoverImage,
+    tempProfileImage,
+    openEditModal,
+    closeEditModal,
+    openLogoutModal,
+    closeLogoutModal,
+    pickCoverImage,
+    pickProfileImage,
+    saveProfileChanges,
   };
 };

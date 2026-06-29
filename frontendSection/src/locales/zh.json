@@ -36,7 +36,18 @@
     "title": "设置",
     "subtitle": "自定义您的体验",
     "language": "语言",
-    "selectLanguage": "选择语言"
+    "selectLanguage": "选择语言",
+    "editProfile": "编辑个人资料",
+    "darkMode": "深色模式",
+    "version": "版本 1.0.0",
+    "coverImage": "封面图片",
+    "profileImage": "个人资料图片",
+    "profileName": "个人资料名称",
+    "change": "更改",
+    "enterName": "输入您的名字",
+    "signOut": "退出",
+    "logoutTitle": "退出",
+    "logoutMessage": "您确定要退出吗？"
   },
   "tabs": {
     "home": "首页",

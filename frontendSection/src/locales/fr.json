@@ -36,7 +36,18 @@
     "title": "Paramètres",
     "subtitle": "Personnalisez votre expérience",
     "language": "Langue",
-    "selectLanguage": "Sélectionner la langue"
+    "selectLanguage": "Sélectionner la langue",
+    "editProfile": "Modifier le profil",
+    "darkMode": "Mode sombre",
+    "version": "Version 1.0.0",
+    "coverImage": "Image de couverture",
+    "profileImage": "Image de profil",
+    "profileName": "Nom du profil",
+    "change": "Changer",
+    "enterName": "Entrez votre nom",
+    "signOut": "Déconnexion",
+    "logoutTitle": "Déconnexion",
+    "logoutMessage": "Êtes-vous sûr de vouloir vous déconnecter ?"
   },
   "tabs": {
     "home": "Accueil",

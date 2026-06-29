@@ -36,7 +36,18 @@
     "title": "Configuración",
     "subtitle": "Personaliza tu experiencia",
     "language": "Idioma",
-    "selectLanguage": "Seleccionar idioma"
+    "selectLanguage": "Seleccionar idioma",
+    "editProfile": "Editar perfil",
+    "darkMode": "Modo oscuro",
+    "version": "Versión 1.0.0",
+    "coverImage": "Imagen de portada",
+    "profileImage": "Imagen de perfil",
+    "profileName": "Nombre de perfil",
+    "change": "Cambiar",
+    "enterName": "Ingrese su nombre",
+    "signOut": "Cerrar sesión",
+    "logoutTitle": "Cerrar sesión",
+    "logoutMessage": "¿Estás seguro de que quieres cerrar sesión?"
   },
   "tabs": {
     "home": "Inicio",

@@ -45,6 +45,9 @@ const createUserByEmailFunction = async (req: any, res: any) => {
       otpAttempts: 0,
       registrationCompleted: false,
       authToken: "",
+      profileName: "",
+      coverImage: "",
+      profileImage: "",
     });
 
     return res.send({success: true, uid: userRecord.uid});

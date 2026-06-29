@@ -123,9 +123,8 @@ const useLandingPageViewModel = ({
   const syncUserWithBackend = async (
     token: string, 
     provider: 'google' | 'github' | 'linkedin',
-    userProfile?: { email: string | null; displayName: string | null; uid?: string }
+    userProfile?: { email: string | null; displayName: string | null; uid?: string; profileImage?: string }
   ) => {
-    console.log("userProfile",userProfile);
     try {
       // Update this URL string to match your newly deployed Cloud Function route
       const BACKEND_SOCIAL_AUTH_URL = 'https://createuserbysociallogins-cm5h7rlbta-uc.a.run.app';
@@ -135,13 +134,15 @@ const useLandingPageViewModel = ({
         name: userProfile?.displayName,
         uid: userProfile?.uid,
         provider: provider,
-        authToken: token
+        authToken: token,
+        profileImage: userProfile?.profileImage
       });
-
+console.log("response",response)
       if (response.data?.success) {
         setAuthToken(token);
         showToast(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login successful`, 'success');
       } else {
+        console.log("object",response.data)
         throw new Error(response.data?.error || 'Database sync rejected.');
       }
     } catch (error: any) {
@@ -204,7 +205,6 @@ const useLandingPageViewModel = ({
       const userCredential = await auth().signInWithCredential(credential);
       const idToken = await userCredential.user.getIdToken();
 
-      // Pass Firebase Auth context values down to your custom database
       await syncUserWithBackend(idToken, 'google', {
         email: userCredential.user.email,
         displayName: userCredential.user.displayName,
@@ -254,26 +254,17 @@ const handleLinkedInSuccess = async (token: LinkedInToken) => {
       if (!linkedInToken) {
         throw new Error('LinkedIn access token not found');
       }
-
-      // 1. Fetch User Profile Data from LinkedIn's UserInfo Endpoint
-      // (If your LinkedIn package already provides token.user, you can skip this fetch)
       const response = await axios.get('https://api.linkedin.com/v2/userinfo', {
         headers: {
           Authorization: `Bearer ${linkedInToken}`,
         },
       });
 
-      const { email, name, sub } = response.data; // 'sub' is LinkedIn's unique user ID
-
-      if (!email) {
-        throw new Error('Could not retrieve email from LinkedIn profile.');
-      }
-
-      // 2. Synchronize with your backend database with the proper fields filled out!
       await syncUserWithBackend(linkedInToken, 'linkedin', {
-        email: email,
-        displayName: name || '',
-        uid: `linkedin_${sub}`, // Generate a unique UID string for your backend database key
+        email: response?.data?.email,
+        displayName: response?.data?.name || '',
+        profileImage: response?.data?.picture,
+        uid: `linkedin_${response?.data?.sub}`,
       });
 
     } catch (error: any) {

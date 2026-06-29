@@ -36,7 +36,18 @@
     "title": "सेटिंग्स",
     "subtitle": "अपना अनुभव कस्टमाइज़ करें",
     "language": "भाषा",
-    "selectLanguage": "भाषा चुनें"
+    "selectLanguage": "भाषा चुनें",
+    "editProfile": "प्रोफ़ाइल संपादित करें",
+    "darkMode": "डार्क मोड",
+    "version": "संस्करण 1.0.0",
+    "coverImage": "कवर इमेज",
+    "profileImage": "प्रोफ़ाइल इमेज",
+    "profileName": "प्रोफ़ाइल नाम",
+    "change": "बदलें",
+    "enterName": "अपना नाम दर्ज करें",
+    "signOut": "साइन आउट",
+    "logoutTitle": "साइन आउट",
+    "logoutMessage": "क्या आप वाकई साइन आउट करना चाहते हैं?"
   },
   "tabs": {
     "home": "होम",

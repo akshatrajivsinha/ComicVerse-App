@@ -2,7 +2,7 @@ import admin from "firebase-admin";
 
 const createUserBySocialLogin = async (req: any, res: any) => {
   try {
-    const {email, name, uid, provider, authToken} = req.body;
+    const {email, name, uid, provider, authToken, profileImage} = req.body;
 
     if (!email) {
       return res.status(422).send({error: "Email is required for social login"});
@@ -25,6 +25,7 @@ const createUserBySocialLogin = async (req: any, res: any) => {
         success: true,
         message: "User synchronized successfully (Existing profile)",
         uid: uid,
+        profileImage: profileImage || "",
       });
     }
 
@@ -33,7 +34,7 @@ const createUserBySocialLogin = async (req: any, res: any) => {
 
     await userRef.set({
       email: userEmail,
-      name: name || "",
+      profileName: name || "",
       password: "",
       code: 0,
       codeValid: false,
@@ -43,6 +44,8 @@ const createUserBySocialLogin = async (req: any, res: any) => {
       registrationCompleted: true,
       authToken: authToken,
       provider: provider || "social",
+      coverImage: "",
+      profileImage: profileImage || "",
     });
 
     return res.send({

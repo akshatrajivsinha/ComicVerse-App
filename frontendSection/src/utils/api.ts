@@ -18,6 +18,7 @@ const STORY_DETAIL_API_URL =
   'https://getstorydetialbyslug-cm5h7rlbta-uc.a.run.app';
 
 const USER_DATA_API_URL = 'https://getuserusingauthtoken-cm5h7rlbta-uc.a.run.app';
+const SET_USER_PROFILE_API_URL = 'https://setuserprofilefunction-cm5h7rlbta-uc.a.run.app';
 
 export interface Category {
   id: string;
@@ -74,7 +75,9 @@ export interface UpcomingMovie {
 export interface UserProfile {
   uid?: string;
   email: string;
-  name?: string;
+  profileName?: string;
+  profileImage?: string;
+  coverImage?: string;
   provider?: string;
   registrationCompleted?: boolean;
   createdAt?: number;
@@ -190,6 +193,29 @@ export const getUserByDatabaseToken = async (token: string) => {
       success: false,
       user: null,
       error: 'Failed to fetch user data',
+    };
+  }
+};
+
+export const setUserProfile = async (
+  token: string,
+  body: { profileName: string; coverImage: string; profileImage: string },
+) => {
+  try {
+    const { data } = await axios.post(SET_USER_PROFILE_API_URL, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 30000,
+    });
+    return data;
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.error || error?.message || 'Failed to update profile';
+    console.error('setUserProfile error:', message);
+    return {
+      success: false,
+      error: message,
     };
   }
 };
